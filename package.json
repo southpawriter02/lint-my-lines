@@ -1,0 +1,22 @@
+{
+  "name": "eslint-plugin-lint-my-lines",
+  "version": "0.1.0",
+  "description": "An ESLint plugin to enforce a style guide for code comments.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "mocha tests/lib/rules/"
+  },
+  "keywords": [
+    "eslint",
+    "eslintplugin",
+    "eslint-plugin",
+    "comments",
+    "style-guide"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "eslint": "^8.0.0",
+    "mocha": "^10.0.0"
+  }
+}
