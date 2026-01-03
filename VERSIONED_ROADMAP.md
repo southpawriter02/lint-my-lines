@@ -9,6 +9,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | Version | Status | Description |
 |---------|--------|-------------|
 | **v0.1.0** | ✅ Released | Initial development version with `enforce-todo-format` rule |
+| **v0.2.0** | ✅ Released | Action comment suite with FIXME/NOTE rules, patterns, autofix |
 
 ---
 
@@ -36,14 +37,14 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.2.0 – Action Comment Suite
+## v0.2.0 – Action Comment Suite (Completed) ✅
 
 **Theme:** Complete action-oriented comment rules
 
-- [ ] Implement `enforce-fixme-format` rule (mirrors TODO format for FIXME)
-- [ ] Implement `enforce-note-format` rule (for NOTE comments)
-- [ ] Add configurable format patterns via rule options
-- [ ] Add autofix support for TODO/FIXME/NOTE to suggest format corrections
+- [x] Implement `enforce-fixme-format` rule (mirrors TODO format for FIXME)
+- [x] Implement `enforce-note-format` rule (for NOTE comments)
+- [x] Add configurable format patterns via rule options
+- [x] Add autofix support for TODO/FIXME/NOTE to suggest format corrections
 
 ---
 

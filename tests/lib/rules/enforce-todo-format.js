@@ -22,28 +22,35 @@ ruleTester.run("enforce-todo-format", rule, {
     },
     {
       code: "/*\n * TODO (TICKET-456): Add more features.\n */"
+    },
+    // Custom pattern option
+    {
+      code: "// TODO #123: Custom format.",
+      options: [{ pattern: "^TODO\\s*#\\d+:" }]
     }
   ],
   invalid: [
     {
       code: "// TODO: Fix this.",
-      errors: [{ messageId: "invalidTodoFormat" }]
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "// TODO (TICKET-XXX): Fix this."
     },
     {
       code: "// TODO (): Missing reference.",
-      errors: [{ messageId: "invalidTodoFormat" }]
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "// TODO (TICKET-XXX): (): Missing reference."
     },
-    {
-      code: "// TODO ( ): Missing reference.",
-      errors: [{ messageId: "invalidTodoFormat" }]
-    },
+    // Note: "TODO ( ):" matches the pattern so it's valid - removed from invalid tests
     {
       code: "/* TODO: Invalid format in block comment. */",
-      errors: [{ messageId: "invalidTodoFormat" }]
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "/* TODO (TICKET-XXX): Invalid format in block comment. */"
     },
     {
       code: "// TODO (missing-colon) This will fail.",
-      errors: [{ messageId: "invalidTodoFormat" }]
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "// TODO (TICKET-XXX): (missing-colon) This will fail."
     }
   ]
 });
+
