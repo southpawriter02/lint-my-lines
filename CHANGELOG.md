@@ -7,6 +7,19 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.7.0] - 2026-01-03
+
+### Added
+- `require-file-header` rule to enforce file header comments
+  - Supports JSDoc (`/** */`), block (`/* */`), and line (`//`) comment styles
+  - Configurable `requiredTags` option to specify required tags (default: `["@file"]`)
+  - Common tags: `@file`, `@fileoverview`, `@author`, `@license`, `@copyright`
+  - `allowShebang` option allows `#!/usr/bin/env node` before header (default: `true`)
+  - `maxLinesBeforeHeader` option to allow blank lines before header (default: `0`)
+  - Custom `template` option with placeholders: `{filename}`, `{date}`, `{year}`, `{author}`
+  - Autofix generates header from template based on configured style
+- Documentation for require-file-header rule
+
 ## [0.6.0] - 2026-01-03
 
 ### Added
@@ -103,7 +116,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.6.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.7.0...HEAD
+[0.7.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.3.0...v0.4.0

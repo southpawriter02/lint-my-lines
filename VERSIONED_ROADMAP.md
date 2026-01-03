@@ -14,6 +14,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.4.0** | ✅ Released | Comment formatting rules (length, capitalization, spacing) |
 | **v0.5.0** | ✅ Released | Content quality rules (obvious comments, banned words, explanation requirements) |
 | **v0.6.0** | ✅ Released | JSDoc integration (require-jsdoc, valid-jsdoc, jsdoc-type-syntax) |
+| **v0.7.0** | ✅ Released | File header enforcement (require-file-header) |
 
 ---
 
@@ -113,14 +114,14 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.7.0 – File Header Enforcement
+## v0.7.0 – File Header Enforcement (Completed) ✅
 
 **Theme:** File-level documentation
 
-- [ ] Implement `require-file-header` rule
-- [ ] Configurable required fields (`@file`, `@author`, `@license`)
-- [ ] Template-based header generation (autofix)
-- [ ] Support for different header styles (JSDoc, plain, etc.)
+- [x] Implement `require-file-header` rule
+- [x] Configurable required fields (`@file`, `@author`, `@license`)
+- [x] Template-based header generation (autofix)
+- [x] Support for different header styles (JSDoc, block, line)
 
 ---
 
