@@ -18,6 +18,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.8.0** | ✅ Released | Configurable rule presets (minimal, recommended, strict) |
 | **v0.9.0** | ✅ Released | Developer tooling integration (CLI, flat config, CI/CD) |
 | **v0.10.0** | ✅ Released | Additional language support (TypeScript, Vue, Svelte, Markdown) |
+| **v0.11.0** | ✅ Released | Advanced analysis (stale detection, TODO aging, code ratio, issue trackers) |
 
 ---
 
@@ -176,14 +177,27 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.11.0 – Advanced Analysis
+## v0.11.0 – Advanced Analysis (Completed) ✅
 
 **Theme:** Intelligent linting
 
-- [ ] Stale comment detection (comment references outdated code)
-- [ ] TODO/FIXME aging warnings (configurable stale threshold)
-- [ ] Comment-to-code ratio metrics
-- [ ] Integration with issue trackers (validate ticket IDs exist)
+- [x] Stale comment detection (comment references outdated code)
+  - `stale-comment-detection` rule for detecting references to non-existent identifiers
+  - Conservative detection strategy (backtick-quoted references)
+  - Configurable ignore patterns and minimum identifier length
+- [x] TODO/FIXME aging warnings (configurable stale threshold)
+  - `todo-aging-warnings` rule with date parsing from comment format
+  - Supports ISO, US, European, and written date formats
+  - Configurable warning and critical thresholds
+- [x] Comment-to-code ratio metrics
+  - `comment-code-ratio` rule with min/max ratio enforcement
+  - Options to exclude JSDoc and TODO comments from calculation
+- [x] Integration with issue trackers (validate ticket IDs exist)
+  - `issue-tracker-integration` rule supporting GitHub, Jira, GitLab, Linear, and custom APIs
+  - Environment variable support for tokens
+  - In-memory caching for API responses
+  - Uses Node's built-in `https` module (no new dependencies)
+- [x] New `analysis` / `flat/analysis` preset
 
 ---
 

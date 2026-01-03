@@ -6,7 +6,7 @@ Good comments are a crucial part of high-quality code, but they are often neglec
 
 ## Features
 
-*   **17 Rules:** Comprehensive coverage for comment formatting, content quality, and JSDoc/TSDoc validation.
+*   **21 Rules:** Comprehensive coverage for comment formatting, content quality, JSDoc/TSDoc validation, and advanced analysis.
 *   **Multi-language Support:** TypeScript, JSX/TSX, Vue, Svelte, and Markdown code blocks.
 *   **3+ Configuration Presets:** Start quickly with `minimal`, `recommended`, `strict`, or language-specific presets.
 *   **Autofix Support:** Many rules automatically fix issues for you.
@@ -63,6 +63,7 @@ module.exports = {
 | `plugin:lint-my-lines/minimal` | Essential comment hygiene | 4 rules |
 | `plugin:lint-my-lines/recommended` | Balanced defaults for most projects | 8 rules |
 | `plugin:lint-my-lines/strict` | Maximum enforcement for high-quality codebases | 14 rules |
+| `plugin:lint-my-lines/analysis` | Advanced analysis (stale detection, aging, ratios) | 3 rules |
 
 ### Manual Configuration
 
@@ -135,6 +136,15 @@ module.exports = {
 | [vue-template-comments](docs/rules/vue-template-comments.md) | Lint HTML comments in Vue templates | |
 | [svelte-template-comments](docs/rules/svelte-template-comments.md) | Lint HTML comments in Svelte markup | |
 
+### Advanced Analysis Rules
+
+| Rule | Description | Fixable |
+|------|-------------|---------|
+| [stale-comment-detection](docs/rules/stale-comment-detection.md) | Detect comments referencing non-existent code | |
+| [todo-aging-warnings](docs/rules/todo-aging-warnings.md) | Warn on old TODO/FIXME comments | |
+| [comment-code-ratio](docs/rules/comment-code-ratio.md) | Report under/over-documented files | |
+| [issue-tracker-integration](docs/rules/issue-tracker-integration.md) | Validate ticket IDs in issue trackers | |
+
 ## Preset Details
 
 ### Minimal
@@ -175,6 +185,21 @@ Includes everything in `recommended` (as errors), plus:
   "lint-my-lines/require-file-header": ["warn", { requiredTags: ["@file"] }]
 }
 ```
+
+### Analysis
+
+Advanced analysis rules for code quality insights:
+
+```js
+{
+  "lint-my-lines/stale-comment-detection": "warn",
+  "lint-my-lines/todo-aging-warnings": ["warn", { maxAgeDays: 30 }],
+  "lint-my-lines/comment-code-ratio": ["warn", { minRatio: 0.05, maxRatio: 0.40 }]
+  // issue-tracker-integration requires configuration
+}
+```
+
+Note: `issue-tracker-integration` requires explicit configuration for your tracker. See [issue-tracker-integration docs](docs/rules/issue-tracker-integration.md).
 
 ## Integration
 

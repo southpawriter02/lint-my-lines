@@ -7,6 +7,34 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.11.0] - 2026-01-03
+
+### Added
+- Advanced Analysis rules:
+  - `stale-comment-detection` - Detect comments referencing non-existent code identifiers
+    - Conservative detection: only flags backtick-quoted references
+    - Configurable `ignorePatterns` and `minIdentifierLength`
+  - `todo-aging-warnings` - Warn on old TODO/FIXME comments with dates
+    - Parses dates from `TODO (author, YYYY-MM-DD): description` format
+    - Supports ISO, US, European, and written date formats
+    - Configurable `maxAgeDays` (30 default) and `criticalAgeDays` (90 default)
+  - `comment-code-ratio` - Report under/over-documented files
+    - Configurable `minRatio` (5%) and `maxRatio` (40%)
+    - Options to `excludeJSDoc` and `excludeTodo` from calculation
+  - `issue-tracker-integration` - Validate ticket IDs exist in issue trackers
+    - Supports GitHub, Jira, GitLab, Linear, and custom APIs
+    - Environment variable support for tokens (`$GITHUB_TOKEN` syntax)
+    - In-memory caching with configurable TTL
+    - Options: `allowClosed`, `warnOnClosed`, `offline` mode
+- New utilities:
+  - `lib/utils/date-utils.js` - Date parsing for comment aging analysis
+  - `lib/utils/issue-tracker-client.js` - HTTP clients for issue trackers
+- New preset: `analysis` / `flat/analysis` for advanced analysis rules
+- Documentation for all new rules in `docs/rules/`
+
+### Dependencies
+- No new dependencies (uses Node's built-in `https` module for API requests)
+
 ## [0.10.0] - 2026-01-03
 
 ### Added
@@ -188,7 +216,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.10.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.11.0...HEAD
+[0.11.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.7.0...v0.8.0
