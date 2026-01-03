@@ -7,6 +7,13 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.4.0] - 2026-01-03
+
+### Added
+- `enforce-comment-length` rule with min/max length and URL ignore options
+- `enforce-capitalization` rule for sentence case with skip patterns and autofix
+- `comment-spacing` rule for space after `//` and `*` with autofix
+
 ## [0.3.0] - 2026-01-03
 
 ### Added

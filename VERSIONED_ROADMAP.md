@@ -11,6 +11,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.1.0** | ✅ Released | Initial development version with `enforce-todo-format` rule |
 | **v0.2.0** | ✅ Released | Action comment suite with FIXME/NOTE rules, patterns, autofix |
 | **v0.3.0** | ✅ Released | Commented-out code detection with configurable thresholds |
+| **v0.4.0** | ✅ Released | Comment formatting rules (length, capitalization, spacing) |
 
 ---
 
@@ -61,17 +62,17 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.4.0 – Comment Formatting Rules
+## v0.4.0 – Comment Formatting Rules (Completed) ✅
 
 **Theme:** Readability and consistency
 
-- [ ] Implement `enforce-comment-length` rule
+- [x] Implement `enforce-comment-length` rule
   - Configure min/max length
   - Ignore links/URLs in length calculations
-- [ ] Implement `enforce-capitalization` rule
+- [x] Implement `enforce-capitalization` rule
   - Sentence case for comment starts
   - Configurable exceptions for code references
-- [ ] Implement `comment-spacing` rule
+- [x] Implement `comment-spacing` rule
   - Enforce space after `//`
   - Enforce space around `*` in block comments
 
