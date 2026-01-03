@@ -16,6 +16,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.6.0** | ✅ Released | JSDoc integration (require-jsdoc, valid-jsdoc, jsdoc-type-syntax) |
 | **v0.7.0** | ✅ Released | File header enforcement (require-file-header) |
 | **v0.8.0** | ✅ Released | Configurable rule presets (minimal, recommended, strict) |
+| **v0.9.0** | ✅ Released | Developer tooling integration (CLI, flat config, CI/CD) |
 
 ---
 
@@ -137,15 +138,15 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.9.0 – Developer Tooling Integration
+## v0.9.0 – Developer Tooling Integration (Completed) ✅
 
 **Theme:** CI/CD and workflow
 
-- [ ] Create official pre-commit hook configuration
-- [ ] Create GitHub Action for PR checks
-- [ ] Add configuration generator CLI (`npx lint-my-lines init`)
-- [ ] Support for `.lintmylinesrc` config file
-- [ ] Create ESLint flat config support
+- [x] Create official pre-commit hook configuration (docs/INTEGRATION_GUIDE.md)
+- [x] Create GitHub Action for PR checks (.github/workflows/lint-comments.yml)
+- [x] Add configuration generator CLI (`npx lint-my-lines init`)
+- [x] Support for `.lintmylinesrc` config file
+- [x] Create ESLint flat config support (`flat/minimal`, `flat/recommended`, `flat/strict`)
 
 ---
 

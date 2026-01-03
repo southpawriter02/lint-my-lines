@@ -7,6 +7,30 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.9.0] - 2026-01-03
+
+### Added
+- ESLint flat config support (v9+) with new config names:
+  - `flat/minimal`, `flat/recommended`, `flat/strict`
+- Configuration generator CLI: `npx lint-my-lines init`
+  - `--preset` flag to select minimal, recommended, or strict
+  - `--flat` / `--no-flat` flags to choose config format
+  - Detects existing ESLint config and provides merge instructions
+  - Reads `.lintmylinesrc` for project-specific overrides
+- `.lintmylinesrc` / `.lintmylinesrc.json` config file support
+  - Define preset and rule overrides for project-wide defaults
+  - Also supports `lintmylines` key in `package.json`
+- GitHub Actions workflow template (`.github/workflows/lint-comments.yml`)
+- Comprehensive integration guide (`docs/INTEGRATION_GUIDE.md`)
+  - Pre-commit hooks setup (Husky, lint-staged, pre-commit framework)
+  - CI/CD examples (GitHub Actions, GitLab CI, CircleCI)
+  - Editor integration (VS Code, WebStorm, Vim/Neovim)
+  - Monorepo configurations
+- Updated README with CLI quick start and integration section
+
+### Dependencies
+- Added `commander` for CLI argument parsing
+
 ## [0.8.0] - 2026-01-03
 
 ### Added
@@ -133,7 +157,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.8.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.9.0...HEAD
+[0.9.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.5.0...v0.6.0

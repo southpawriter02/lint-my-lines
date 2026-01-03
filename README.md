@@ -20,9 +20,33 @@ Good comments are a crucial part of high-quality code, but they are often neglec
 npm install eslint-plugin-lint-my-lines --save-dev
 ```
 
-### Quick Start with Presets
+### Quick Setup with CLI
 
-The easiest way to get started is with a preset configuration:
+The fastest way to configure lint-my-lines:
+
+```bash
+# Generate ESLint config with recommended preset
+npx lint-my-lines init
+
+# Use a different preset
+npx lint-my-lines init --preset strict
+
+# For ESLint v8 (legacy config)
+npx lint-my-lines init --no-flat
+```
+
+### ESLint Flat Config (v9+)
+
+```javascript
+// eslint.config.js
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/recommended"],
+];
+```
+
+### Legacy Config (ESLint v8)
 
 ```js
 // .eslintrc.js
@@ -142,6 +166,31 @@ Includes everything in `recommended` (as errors), plus:
   "lint-my-lines/require-file-header": ["warn", { requiredTags: ["@file"] }]
 }
 ```
+
+## Integration
+
+### Pre-commit Hooks
+
+With [Husky](https://github.com/typicode/husky) and lint-staged:
+
+```json
+{
+  "lint-staged": {
+    "*.{js,ts}": "eslint --fix"
+  }
+}
+```
+
+### GitHub Actions
+
+Copy the workflow from `.github/workflows/lint-comments.yml` or create your own:
+
+```yaml
+- run: npm ci
+- run: npx eslint .
+```
+
+See the full [Integration Guide](docs/INTEGRATION_GUIDE.md) for CI/CD, editor setup, and monorepo configurations.
 
 ## License
 
