@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.8.0] - 2026-01-03
+
+### Added
+- Configuration presets for easy adoption:
+  - `plugin:lint-my-lines/minimal` - Essential comment hygiene (4 rules)
+  - `plugin:lint-my-lines/recommended` - Balanced defaults (8 rules)
+  - `plugin:lint-my-lines/strict` - Maximum enforcement (14 rules)
+- Comprehensive documentation for all rules in `docs/rules/`
+  - enforce-todo-format, enforce-fixme-format, enforce-note-format
+  - enforce-comment-length, enforce-capitalization, comment-spacing
+  - no-commented-code, no-obvious-comments, ban-specific-words
+  - require-explanation-comments
+- Updated README with preset usage examples and complete rule reference
+
+### Changed
+- Reorganized `lib/index.js` to export both `rules` and `configs`
+
 ## [0.7.0] - 2026-01-03
 
 ### Added
@@ -116,7 +133,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.7.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.8.0...HEAD
+[0.8.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.6.0...v0.7.0
 [0.6.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.4.0...v0.5.0

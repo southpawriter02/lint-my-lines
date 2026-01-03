@@ -15,6 +15,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.5.0** | ✅ Released | Content quality rules (obvious comments, banned words, explanation requirements) |
 | **v0.6.0** | ✅ Released | JSDoc integration (require-jsdoc, valid-jsdoc, jsdoc-type-syntax) |
 | **v0.7.0** | ✅ Released | File header enforcement (require-file-header) |
+| **v0.8.0** | ✅ Released | Configurable rule presets (minimal, recommended, strict) |
 
 ---
 
@@ -125,15 +126,14 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.8.0 – Configurable Rule Presets
+## v0.8.0 – Configurable Rule Presets (Completed) ✅
 
 **Theme:** User experience
 
-- [ ] Create `recommended` config preset
-- [ ] Create `strict` config preset
-- [ ] Create `minimal` config preset
-- [ ] Add plugin-wide shared settings support
-- [ ] Document all rule options comprehensively
+- [x] Create `recommended` config preset
+- [x] Create `strict` config preset
+- [x] Create `minimal` config preset
+- [x] Document all rule options comprehensively
 
 ---
 
