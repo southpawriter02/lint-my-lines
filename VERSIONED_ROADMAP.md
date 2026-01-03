@@ -10,6 +10,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 |---------|--------|-------------|
 | **v0.1.0** | ✅ Released | Initial development version with `enforce-todo-format` rule |
 | **v0.2.0** | ✅ Released | Action comment suite with FIXME/NOTE rules, patterns, autofix |
+| **v0.3.0** | ✅ Released | Commented-out code detection with configurable thresholds |
 
 ---
 
@@ -48,15 +49,15 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.3.0 – Commented-Out Code Detection
+## v0.3.0 – Commented-Out Code Detection (Completed) ✅
 
 **Theme:** Code cleanliness
 
-- [ ] Implement `no-commented-code` rule
-- [ ] Detect multi-line commented functions/classes
-- [ ] Detect single-line statement comments (assignments, calls)
-- [ ] Allow configurable thresholds for acceptable commented lines
-- [ ] Provide clear error messages suggesting Git alternatives
+- [x] Implement `no-commented-code` rule
+- [x] Detect multi-line commented functions/classes
+- [x] Detect single-line statement comments (assignments, calls)
+- [x] Allow configurable thresholds for acceptable commented lines
+- [x] Provide clear error messages suggesting Git alternatives
 
 ---
 

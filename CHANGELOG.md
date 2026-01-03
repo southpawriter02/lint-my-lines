@@ -7,6 +7,18 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.0] - 2026-01-03
+
+### Added
+- `no-commented-code` rule to detect and flag commented-out code
+- Pattern detection for functions, classes, imports, assignments, and more
+- Configurable `threshold` option for minimum code-like lines before flagging
+- Configurable `allowPatterns` option for custom ignore patterns
+- Error message suggesting Git alternatives (stash, branches)
+
+### Changed
+- Added smart skip patterns for JSDoc, URLs, action comments, and license headers
+
 ## [0.2.0] - 2026-01-03
 
 ### Added
