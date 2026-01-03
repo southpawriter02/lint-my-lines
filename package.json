@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-lint-my-lines",
-  "version": "0.9.0",
+  "version": "0.10.0",
   "description": "An ESLint plugin to enforce a style guide for code comments.",
   "main": "lib/index.js",
   "bin": {
@@ -14,7 +14,13 @@
     "eslintplugin",
     "eslint-plugin",
     "comments",
-    "style-guide"
+    "style-guide",
+    "jsdoc",
+    "tsdoc",
+    "typescript",
+    "vue",
+    "svelte",
+    "markdown"
   ],
   "author": "",
   "license": "ISC",
@@ -23,5 +29,21 @@
     "comment-parser": "^1.4.1",
     "eslint": "^8.0.0",
     "mocha": "^10.0.0"
+  },
+  "peerDependencies": {
+    "@typescript-eslint/parser": ">=5.0.0",
+    "vue-eslint-parser": ">=9.0.0",
+    "svelte-eslint-parser": ">=0.30.0"
+  },
+  "peerDependenciesMeta": {
+    "@typescript-eslint/parser": {
+      "optional": true
+    },
+    "vue-eslint-parser": {
+      "optional": true
+    },
+    "svelte-eslint-parser": {
+      "optional": true
+    }
   }
 }

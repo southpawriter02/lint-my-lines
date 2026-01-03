@@ -7,6 +7,37 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.10.0] - 2026-01-03
+
+### Added
+- TypeScript support:
+  - `valid-tsdoc` rule for TSDoc-specific validation (`@typeParam`, `@remarks`, `@beta`, etc.)
+  - `typescript` and `typescript-strict` configuration presets
+  - TSDoc utility functions in `lib/utils/jsdoc-utils.js`
+- JSX/TSX support:
+  - JSX-aware autofix for TODO/FIXME/NOTE rules (uses block comments in JSX expressions)
+  - `react` configuration preset
+- Vue SFC support:
+  - `.vue` processor for template HTML comments extraction
+  - `vue-template-comments` rule for linting `<!-- -->` comments in templates
+  - `vue` configuration preset
+- Svelte support:
+  - `.svelte` processor for markup HTML comments extraction
+  - `svelte-template-comments` rule for linting `<!-- -->` comments in markup
+  - `svelte` configuration preset
+- Markdown support:
+  - `.md` processor for fenced code block extraction
+  - Supports js, javascript, ts, typescript, jsx, tsx, mjs, cjs language hints
+  - `markdown` configuration preset
+- Documentation for new rules (`docs/rules/valid-tsdoc.md`, `vue-template-comments.md`, `svelte-template-comments.md`)
+- Language support section in README and Integration Guide
+
+### Changed
+- `enforce-todo-format`, `enforce-fixme-format`, `enforce-note-format` now detect JSX context for proper autofix
+
+### Dependencies
+- Added optional peer dependencies: `@typescript-eslint/parser`, `vue-eslint-parser`, `svelte-eslint-parser`
+
 ## [0.9.0] - 2026-01-03
 
 ### Added
@@ -157,7 +188,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.9.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.10.0...HEAD
+[0.10.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.8.0...v0.9.0
 [0.8.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.7.0...v0.8.0
 [0.7.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.6.0...v0.7.0

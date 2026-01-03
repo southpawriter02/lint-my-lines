@@ -8,6 +8,12 @@ This guide covers integrating lint-my-lines into your development workflow, incl
 - [ESLint Configuration](#eslint-configuration)
   - [Flat Config (ESLint v9+)](#flat-config-eslint-v9)
   - [Legacy Config (ESLint v8)](#legacy-config-eslint-v8)
+- [Language Support](#language-support)
+  - [TypeScript](#typescript)
+  - [JSX/TSX (React)](#jsxtsx-react)
+  - [Vue](#vue)
+  - [Svelte](#svelte)
+  - [Markdown](#markdown)
 - [Project Configuration File](#project-configuration-file)
 - [Pre-commit Hooks](#pre-commit-hooks)
   - [Husky + lint-staged](#husky--lint-staged)
@@ -98,6 +104,183 @@ With customizations:
   }
 }
 ```
+
+---
+
+## Language Support
+
+lint-my-lines provides specialized support for TypeScript, JSX/TSX, Vue, Svelte, and Markdown files.
+
+### TypeScript
+
+TypeScript files work automatically with all comment rules. For TSDoc-specific validation, use the TypeScript preset:
+
+#### Flat Config
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/typescript"],
+  // or for strict TSDoc validation:
+  lintMyLines.configs["flat/typescript-strict"],
+];
+```
+
+#### Legacy Config
+
+```json
+{
+  "extends": ["plugin:lint-my-lines/typescript"]
+}
+```
+
+The `valid-tsdoc` rule validates TSDoc-specific tags like `@typeParam`, `@remarks`, `@beta`, etc.
+
+### JSX/TSX (React)
+
+JSX and TSX files work automatically. The autofix for TODO/FIXME/NOTE comments is JSX-aware and will use block comments when inside JSX expressions:
+
+```jsx
+function App() {
+  return (
+    <div>
+      {/* TODO (TICKET-123): Add loading state */}
+      <Content />
+    </div>
+  );
+}
+```
+
+#### Flat Config
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/react"],
+];
+```
+
+#### Legacy Config
+
+```json
+{
+  "extends": ["plugin:lint-my-lines/react"]
+}
+```
+
+### Vue
+
+Vue Single File Components (SFCs) require the Vue processor to lint HTML comments in templates.
+
+#### Flat Config
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/vue"],
+];
+```
+
+#### Legacy Config
+
+```json
+{
+  "extends": ["plugin:lint-my-lines/vue"],
+  "overrides": [
+    {
+      "files": ["*.vue"],
+      "processor": "lint-my-lines/.vue"
+    }
+  ]
+}
+```
+
+The `vue-template-comments` rule lints HTML comments in templates:
+
+```vue
+<template>
+  <!-- TODO (TICKET-123): Add responsive layout -->
+  <div class="container">
+    <slot></slot>
+  </div>
+</template>
+```
+
+### Svelte
+
+Svelte components require the Svelte processor to lint HTML comments in markup.
+
+#### Flat Config
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/svelte"],
+];
+```
+
+#### Legacy Config
+
+```json
+{
+  "extends": ["plugin:lint-my-lines/svelte"],
+  "overrides": [
+    {
+      "files": ["*.svelte"],
+      "processor": "lint-my-lines/.svelte"
+    }
+  ]
+}
+```
+
+The `svelte-template-comments` rule lints HTML comments in markup:
+
+```svelte
+<script>
+  let count = 0;
+</script>
+
+<!-- TODO (TICKET-123): Add animation -->
+<button on:click={() => count++}>
+  Count: {count}
+</button>
+```
+
+### Markdown
+
+Markdown files can be linted for code blocks with fenced code (` ``` `).
+
+#### Flat Config
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/markdown"],
+];
+```
+
+#### Legacy Config
+
+```json
+{
+  "extends": ["plugin:lint-my-lines/markdown"],
+  "overrides": [
+    {
+      "files": ["*.md"],
+      "processor": "lint-my-lines/.md"
+    }
+  ]
+}
+```
+
+Supported code block languages: `js`, `javascript`, `ts`, `typescript`, `jsx`, `tsx`, `mjs`, `cjs`.
+
+Errors in Markdown code blocks are prefixed with the language, e.g., `[Markdown javascript block] TODO comment should use format...`
 
 ---
 

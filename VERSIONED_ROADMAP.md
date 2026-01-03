@@ -17,6 +17,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.7.0** | ✅ Released | File header enforcement (require-file-header) |
 | **v0.8.0** | ✅ Released | Configurable rule presets (minimal, recommended, strict) |
 | **v0.9.0** | ✅ Released | Developer tooling integration (CLI, flat config, CI/CD) |
+| **v0.10.0** | ✅ Released | Additional language support (TypeScript, Vue, Svelte, Markdown) |
 
 ---
 
@@ -150,15 +151,28 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.10.0 – Additional Language Support
+## v0.10.0 – Additional Language Support (Completed) ✅
 
 **Theme:** Ecosystem expansion
 
-- [ ] TypeScript-specific comment rules
-- [ ] JSX/TSX comment handling
-- [ ] Support for Vue SFC `<script>` sections
-- [ ] Support for Svelte components
-- [ ] Markdown code block comment scanning (optional)
+- [x] TypeScript-specific comment rules
+  - `valid-tsdoc` rule for TSDoc tag validation (`@typeParam`, `@remarks`, `@beta`, etc.)
+  - TSDoc utility functions in `lib/utils/jsdoc-utils.js`
+  - `typescript` and `typescript-strict` configuration presets
+- [x] JSX/TSX comment handling
+  - JSX-aware autofix for TODO/FIXME/NOTE rules
+  - `react` configuration preset
+- [x] Support for Vue SFC templates
+  - `.vue` processor for template HTML comment extraction
+  - `vue-template-comments` rule
+  - `vue` configuration preset
+- [x] Support for Svelte components
+  - `.svelte` processor for markup HTML comment extraction
+  - `svelte-template-comments` rule
+  - `svelte` configuration preset
+- [x] Markdown code block comment scanning
+  - `.md` processor for fenced code block extraction
+  - `markdown` configuration preset
 
 ---
 

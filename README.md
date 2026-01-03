@@ -6,8 +6,9 @@ Good comments are a crucial part of high-quality code, but they are often neglec
 
 ## Features
 
-*   **14 Rules:** Comprehensive coverage for comment formatting, content quality, and JSDoc validation.
-*   **3 Configuration Presets:** Start quickly with `minimal`, `recommended`, or `strict` presets.
+*   **17 Rules:** Comprehensive coverage for comment formatting, content quality, and JSDoc/TSDoc validation.
+*   **Multi-language Support:** TypeScript, JSX/TSX, Vue, Svelte, and Markdown code blocks.
+*   **3+ Configuration Presets:** Start quickly with `minimal`, `recommended`, `strict`, or language-specific presets.
 *   **Autofix Support:** Many rules automatically fix issues for you.
 *   **Style Guide:** Based on a comprehensive [STYLE_GUIDE.md](STYLE_GUIDE.md) that explains the rationale behind each rule.
 *   **Extensible:** Built as an ESLint plugin, making it easy to integrate into existing JavaScript and TypeScript projects.
@@ -117,14 +118,22 @@ module.exports = {
 | [ban-specific-words](docs/rules/ban-specific-words.md) | Ban vague/non-inclusive terms | ✅ |
 | [require-explanation-comments](docs/rules/require-explanation-comments.md) | Require comments for complex code | |
 
-### JSDoc Rules
+### JSDoc/TSDoc Rules
 
 | Rule | Description | Fixable |
 |------|-------------|---------|
 | [require-jsdoc](docs/rules/require-jsdoc.md) | Require JSDoc for exported functions | ✅ |
 | [valid-jsdoc](docs/rules/valid-jsdoc.md) | Validate JSDoc matches function signature | ✅ |
+| [valid-tsdoc](docs/rules/valid-tsdoc.md) | Validate TSDoc-specific tags | |
 | [jsdoc-type-syntax](docs/rules/jsdoc-type-syntax.md) | Enforce consistent type syntax | ✅ |
 | [require-file-header](docs/rules/require-file-header.md) | Require file header comments | ✅ |
+
+### Template Rules
+
+| Rule | Description | Fixable |
+|------|-------------|---------|
+| [vue-template-comments](docs/rules/vue-template-comments.md) | Lint HTML comments in Vue templates | |
+| [svelte-template-comments](docs/rules/svelte-template-comments.md) | Lint HTML comments in Svelte markup | |
 
 ## Preset Details
 
@@ -191,6 +200,34 @@ Copy the workflow from `.github/workflows/lint-comments.yml` or create your own:
 ```
 
 See the full [Integration Guide](docs/INTEGRATION_GUIDE.md) for CI/CD, editor setup, and monorepo configurations.
+
+## Language Support
+
+lint-my-lines supports multiple languages and frameworks:
+
+| Language/Framework | Preset | Features |
+|--------------------|--------|----------|
+| JavaScript | `recommended` | All rules |
+| TypeScript | `typescript` | All rules + TSDoc validation |
+| JSX/TSX (React) | `react` | JSX-aware autofix |
+| Vue | `vue` | Template HTML comment linting |
+| Svelte | `svelte` | Template HTML comment linting |
+| Markdown | `markdown` | Code block linting |
+
+### Example: Multi-language Project
+
+```javascript
+// eslint.config.js
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/recommended"],
+  lintMyLines.configs["flat/typescript"],
+  lintMyLines.configs["flat/vue"],
+];
+```
+
+See the [Integration Guide](docs/INTEGRATION_GUIDE.md#language-support) for detailed setup instructions.
 
 ## License
 
