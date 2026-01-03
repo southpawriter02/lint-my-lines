@@ -7,6 +7,35 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.6.0] - 2026-01-03
+
+### Added
+- `require-jsdoc` rule to enforce JSDoc comments on exported functions
+  - Detects named exports (`export function`), default exports, and CommonJS exports (`module.exports`)
+  - Configurable for FunctionDeclaration, ArrowFunctionExpression, FunctionExpression, ClassDeclaration, and MethodDefinition
+  - Options: `exemptEmptyFunctions` to skip functions with empty bodies, `minLineCount` to only require JSDoc for longer functions
+  - Autofix generates JSDoc templates with `@param` for each parameter and `@returns` for functions that return values
+  - Handles rest parameters (`...args`) and default parameters as optional `[param]`
+- `valid-jsdoc` rule to validate JSDoc content matches function signatures
+  - Validates `@param` tags match function parameter names
+  - Validates `@param` order matches function signature order
+  - Validates `@returns` presence for functions that return values
+  - Detects duplicate `@param` tags for the same parameter
+  - Options: `requireParamType`, `requireReturnType`, `requireParamDescription`, `requireReturnDescription`, `checkParamNames`, `checkParamOrder`
+  - Autofix adds missing `@param` and `@returns` tags
+- `jsdoc-type-syntax` rule to enforce consistent type syntax in JSDoc
+  - Enforces TypeScript-style lowercase types (`string`, `number`, `boolean`) by default
+  - Option `prefer: "jsdoc"` to enforce capitalized types (`String`, `Number`, `Boolean`)
+  - Custom type mappings via `typeMap` option (e.g., `{"int": "number"}`)
+  - Handles complex types: generics (`Array<String>`), unions (`String|Number`), nullable (`?String`)
+  - Autofix replaces type names automatically
+- Shared JSDoc utilities module at `lib/utils/jsdoc-utils.js`
+  - Functions: `isJSDocComment`, `parseJSDoc`, `getJSDocComment`, `hasJSDocComment`, `getFunctionParams`, `functionReturnsValue`, `getIndentation`, `generateJSDocTemplate`
+- Documentation for all new rules in `docs/rules/` directory
+
+### Dependencies
+- Added `comment-parser` library for robust JSDoc parsing
+
 ## [0.5.0] - 2026-01-03
 
 ### Added
@@ -74,7 +103,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.5.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.6.0...HEAD
+[0.6.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.5.0...v0.6.0
 [0.5.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.4.0...v0.5.0
 [0.4.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.3.0...v0.4.0
 [0.3.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.2.0...v0.3.0

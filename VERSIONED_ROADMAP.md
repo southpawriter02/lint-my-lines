@@ -13,6 +13,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.3.0** | ✅ Released | Commented-out code detection with configurable thresholds |
 | **v0.4.0** | ✅ Released | Comment formatting rules (length, capitalization, spacing) |
 | **v0.5.0** | ✅ Released | Content quality rules (obvious comments, banned words, explanation requirements) |
+| **v0.6.0** | ✅ Released | JSDoc integration (require-jsdoc, valid-jsdoc, jsdoc-type-syntax) |
 
 ---
 
@@ -98,17 +99,17 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.6.0 – JSDoc Integration
+## v0.6.0 – JSDoc Integration (Completed) ✅
 
 **Theme:** Function documentation
 
-- [ ] Implement `require-jsdoc` rule (for exported functions)
-- [ ] Implement `valid-jsdoc` rule
+- [x] Implement `require-jsdoc` rule (for exported functions)
+- [x] Implement `valid-jsdoc` rule
   - Validate `@param` matches function parameters
   - Validate `@returns` presence for non-void functions
-- [ ] Implement `jsdoc-type-syntax` rule
+- [x] Implement `jsdoc-type-syntax` rule
   - Enforce TypeScript-style types vs JSDoc types
-- [ ] Add autofix to generate JSDoc templates
+- [x] Add autofix to generate JSDoc templates
 
 ---
 
