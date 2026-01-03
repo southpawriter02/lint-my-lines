@@ -12,6 +12,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.2.0** | ✅ Released | Action comment suite with FIXME/NOTE rules, patterns, autofix |
 | **v0.3.0** | ✅ Released | Commented-out code detection with configurable thresholds |
 | **v0.4.0** | ✅ Released | Comment formatting rules (length, capitalization, spacing) |
+| **v0.5.0** | ✅ Released | Content quality rules (obvious comments, banned words, explanation requirements) |
 
 ---
 
@@ -78,17 +79,22 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.5.0 – Content Quality Rules
+## v0.5.0 – Content Quality Rules (Completed) ✅
 
 **Theme:** Meaningful comments
 
-- [ ] Implement `no-obvious-comments` rule
+- [x] Implement `no-obvious-comments` rule
   - Detect comments restating code (`// increment i`, `// return value`)
   - Use AST to match comment text against code patterns
-- [ ] Implement `ban-specific-words` rule
+  - Configurable sensitivity levels (low, medium, high)
+- [x] Implement `ban-specific-words` rule
   - Configurable list of banned words/phrases
-  - Suggest replacements where appropriate
-- [ ] Implement `require-explanation-comments` rule for complex code blocks
+  - Default banned words including non-inclusive language
+  - Suggest replacements where appropriate with autofix
+- [x] Implement `require-explanation-comments` rule for complex code blocks
+  - Configurable complexity detection (nesting depth, regex, bitwise, ternary chains)
+  - Recursion detection
+  - Complex condition detection
 
 ---
 

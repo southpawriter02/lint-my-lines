@@ -7,6 +7,23 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.5.0] - 2026-01-03
+
+### Added
+- `no-obvious-comments` rule to detect comments that restate adjacent code
+  - AST-aware analysis matches comment text against code semantics
+  - Configurable `sensitivity` option (low, medium, high)
+  - Skip patterns for JSDoc, TODO/FIXME/NOTE, URLs, and "why" explanations
+- `ban-specific-words` rule to prevent usage of specific words/phrases
+  - Default banned words including non-inclusive language (whitelist/blacklist, master/slave)
+  - Configurable `bannedWords` with optional replacements and reasons
+  - Autofix support when replacements are available
+  - Options: `caseSensitive`, `includeDefaults`, `wholeWord`
+- `require-explanation-comments` rule for complex code patterns
+  - Detects regex literals, bitwise operations, ternary chains, deep nesting, recursion
+  - Configurable `nestingDepth`, `ternaryChainLength`, `conditionComplexity` thresholds
+  - Configurable `requireFor` option to select which patterns require comments
+
 ## [0.4.0] - 2026-01-03
 
 ### Added
@@ -57,7 +74,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.2.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.5.0...HEAD
+[0.5.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.4.0...v0.5.0
+[0.4.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.3.0...v0.4.0
+[0.3.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.2.0...v0.3.0
 [0.2.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.1.0...v0.2.0
 [0.1.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.0.1...v0.1.0
 [0.0.1]: https://github.com/southpawriter02/lint-my-lines/releases/tag/v0.0.1
