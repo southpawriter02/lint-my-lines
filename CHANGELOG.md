@@ -7,6 +7,20 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.1] - 2026-01-03
+
+### Fixed
+- Code quality issues identified by ESLint static analysis:
+  - Removed unused imports and variables across rule files
+  - Fixed unnecessary escape characters in regex patterns
+  - Added proper block scoping for case statements with lexical declarations
+  - CLI `init` command now properly uses `generateFlatConfigCJS` for CommonJS projects
+  - Svelte processor now uses predefined regex patterns consistently
+
+### Added
+- ESLint configuration (`.eslintrc.js`) for project linting
+- GitHub Actions workflow now runs ESLint checks
+
 ## [0.12.0] - 2026-01-03
 
 ### Added
@@ -243,7 +257,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.1...HEAD
+[0.12.1]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.9.0...v0.10.0

@@ -111,7 +111,6 @@ function multi() {}
 
 // Additional unit tests for ticket pattern extraction
 describe("issue-tracker-integration pattern matching", function () {
-  const { RuleTester } = require("eslint");
 
   // Test that the default pattern matches expected formats
   it("should match GitHub-style tickets", function () {
