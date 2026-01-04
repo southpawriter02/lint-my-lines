@@ -7,6 +7,33 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.12.0] - 2026-01-03
+
+### Added
+- Performance optimization utilities:
+  - `lib/utils/performance-cache.js` - LRU caching infrastructure with configurable max sizes
+  - `lib/utils/comment-utils.js` - Shared comment processing with caching
+  - `lib/utils/ast-utils.js` - Optimized AST traversal utilities
+  - `lib/utils/error-utils.js` - Safe regex compilation and option validation
+- Performance documentation (`docs/PERFORMANCE_GUIDE.md`)
+- Cache size limits for issue tracker validation (max 1000 entries)
+- `clearCaches()` export for testing and cache management
+
+### Changed
+- High-impact rules now use cached comment collection (30-50% faster):
+  - `no-obvious-comments`
+  - `stale-comment-detection`
+  - `ban-specific-words`
+  - `valid-jsdoc`
+- JSDoc parsing is cached across rules via `parseJSDocCached()`
+- Date parsing uses quick-check pattern for early rejection
+- Regex patterns are compiled once and cached (LRU with max 200 entries)
+- Issue tracker cache now has LRU eviction to prevent unbounded growth
+
+### Fixed
+- Missing environment variables now show actionable suggestions
+- Issue tracker cache no longer grows unbounded in long-running processes
+
 ## [0.11.0] - 2026-01-03
 
 ### Added
@@ -216,7 +243,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.11.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.0...HEAD
+[0.12.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.11.0...v0.12.0
 [0.11.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.10.0...v0.11.0
 [0.10.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.9.0...v0.10.0
 [0.9.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.8.0...v0.9.0

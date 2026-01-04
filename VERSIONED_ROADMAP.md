@@ -19,6 +19,7 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 | **v0.9.0** | ✅ Released | Developer tooling integration (CLI, flat config, CI/CD) |
 | **v0.10.0** | ✅ Released | Additional language support (TypeScript, Vue, Svelte, Markdown) |
 | **v0.11.0** | ✅ Released | Advanced analysis (stale detection, TODO aging, code ratio, issue trackers) |
+| **v0.12.0** | ✅ Released | Performance optimization (caching, LRU eviction, error handling) |
 
 ---
 
@@ -201,15 +202,28 @@ This document outlines the planned releases from **v0.0.1** through **v1.0.0**, 
 
 ---
 
-## v0.12.0 – Performance & Polish
+## v0.12.0 – Performance & Polish (Completed) ✅
 
 **Theme:** Production readiness
 
-- [ ] Performance optimization for large codebases
-- [ ] Caching for repeated runs
-- [ ] Parallel rule execution
-- [ ] Memory usage optimization
-- [ ] Comprehensive error handling and messages
+- [x] Performance optimization for large codebases
+  - Comment caching via WeakMap (auto-cleanup)
+  - LRU caching for regex, JSDoc parsing, and date parsing
+  - Identifier collection caching
+- [x] Caching for repeated runs
+  - Shared comment cache across all rules
+  - JSDoc parse results cached by content
+- [x] Batch operations (within ESLint's serial execution model)
+  - Pre-classified comments for efficient filtering
+  - Quick rejection patterns for date parsing
+- [x] Memory usage optimization
+  - LRU eviction for all global caches (configurable max sizes)
+  - WeakMap for file-scoped caches (auto garbage collection)
+  - Issue tracker cache limited to 1000 entries
+- [x] Comprehensive error handling and messages
+  - Safe regex compilation with fallback patterns
+  - Environment variable resolution with actionable error messages
+  - Option validation utilities
 
 ---
 
