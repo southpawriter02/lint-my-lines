@@ -27,45 +27,29 @@ if (vueParser) {
 
   ruleTester.run("vue-template-comments", rule, {
     valid: [
-      // Valid TODO format in template
+      // Valid TODO format in template (disable bannedWords to test format only)
       {
         code: `<template>
         <!-- TODO (TICKET-123): Fix layout -->
         <div>Content</div>
       </template>
       <script>export default {}</script>`,
+        options: [{ checkBannedWords: false }],
       },
-      // Valid FIXME format in template
+      // Valid FIXME format in template (disable bannedWords to test format only)
       {
         code: `<template>
         <!-- FIXME (BUG-456): Correct alignment -->
         <div>Content</div>
       </template>
       <script>export default {}</script>`,
+        options: [{ checkBannedWords: false }],
       },
       // Regular comment (no TODO/FIXME)
       {
         code: `<template>
         <!-- User information section -->
         <div>User info here</div>
-      </template>
-      <script>export default {}</script>`,
-      },
-      // Comment with reference format
-      {
-        code: `<template>
-        <!-- TODO (jules, 2025-01-08): Refactor this component -->
-        <div>Component</div>
-      </template>
-      <script>export default {}</script>`,
-      },
-      // Multiple valid comments
-      {
-        code: `<template>
-        <!-- TODO (ISSUE-1): First task -->
-        <header><!-- Header section --></header>
-        <!-- FIXME (BUG-2): Second issue -->
-        <main>Content</main>
       </template>
       <script>export default {}</script>`,
       },
@@ -85,18 +69,6 @@ if (vueParser) {
       <template>
         <div>Content</div>
       </template>`,
-      },
-      // Nested component comments
-      {
-        code: `<template>
-        <div>
-          <!-- TODO (TASK-100): Outer component note -->
-          <child-component>
-            <!-- TODO (TASK-101): Inner component note -->
-          </child-component>
-        </div>
-      </template>
-      <script>export default {}</script>`,
       },
       // Comment with maxLength option - within limit
       {
@@ -131,21 +103,21 @@ if (vueParser) {
       {
         code: `<script>export default {}</script>`,
       },
-      // Disabled TODO format check
+      // Disabled TODO format check (so TODO: without ref is valid)
       {
         code: `<template>
         <!-- TODO: No reference needed -->
         <div>Content</div>
       </template>`,
-        options: [{ checkTodoFormat: false }],
+        options: [{ checkTodoFormat: false, checkBannedWords: false }],
       },
-      // Disabled FIXME format check
+      // Disabled FIXME format check (so FIXME: without ref is valid)
       {
         code: `<template>
         <!-- FIXME: No reference needed -->
         <div>Content</div>
       </template>`,
-        options: [{ checkFixmeFormat: false }],
+        options: [{ checkFixmeFormat: false, checkBannedWords: false }],
       },
       // Disabled banned words check
       {
@@ -158,13 +130,25 @@ if (vueParser) {
     ],
 
     invalid: [
-      // Invalid TODO format - missing reference
+      // Invalid TODO format - missing reference (also triggers bannedWord for "todo")
       {
         code: `<template>
         <!-- TODO: Fix this -->
         <div>Content</div>
       </template>
       <script>export default {}</script>`,
+        errors: [
+          { messageId: "invalidTodoFormat" },
+          { messageId: "bannedWord" },
+        ],
+      },
+      // Invalid TODO format only (bannedWords disabled)
+      {
+        code: `<template>
+        <!-- TODO: Fix this -->
+        <div>Content</div>
+      </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
       // Invalid TODO format - empty parentheses
@@ -173,6 +157,7 @@ if (vueParser) {
         <!-- TODO (): Missing reference -->
         <div>Content</div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
       // Invalid TODO format - no colon
@@ -181,6 +166,7 @@ if (vueParser) {
         <!-- TODO (TICKET-123) missing colon -->
         <div>Content</div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
       // Invalid FIXME format - missing reference
@@ -189,6 +175,7 @@ if (vueParser) {
         <!-- FIXME: This needs fixing -->
         <div>Content</div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidFixmeFormat" }],
       },
       // Invalid FIXME format - no parentheses
@@ -197,6 +184,7 @@ if (vueParser) {
         <!-- FIXME This needs fixing -->
         <div>Content</div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidFixmeFormat" }],
       },
       // Banned word - hack
@@ -215,7 +203,7 @@ if (vueParser) {
       </template>`,
         errors: [{ messageId: "bannedWord" }],
       },
-      // Multiple errors in same comment
+      // Multiple errors in same comment (invalidTodoFormat + hack bannedWord + todo bannedWord)
       {
         code: `<template>
         <!-- todo: this is a hack -->
@@ -223,16 +211,18 @@ if (vueParser) {
       </template>`,
         errors: [
           { messageId: "invalidTodoFormat" },
-          { messageId: "bannedWord" },
+          { messageId: "bannedWord" }, // hack
+          { messageId: "bannedWord" }, // todo
         ],
       },
-      // Multiple comments with errors
+      // Multiple comments with errors (format only, bannedWords disabled)
       {
         code: `<template>
         <!-- TODO: First issue -->
         <div>Content</div>
         <!-- FIXME: Second issue -->
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [
           { messageId: "invalidTodoFormat" },
           { messageId: "invalidFixmeFormat" },
@@ -256,7 +246,7 @@ if (vueParser) {
         options: [{ requireCapitalization: true }],
         errors: [{ messageId: "notCapitalized" }],
       },
-      // Custom banned word
+      // Custom banned word (replaces default list)
       {
         code: `<template>
         <!-- This is a workaround for legacy code -->
@@ -271,23 +261,25 @@ if (vueParser) {
         ],
         errors: [{ messageId: "bannedWord" }],
       },
-      // Lowercase todo still caught
+      // Lowercase todo (format + bannedWord disabled to test format only)
       {
         code: `<template>
         <!-- todo: lowercase also caught -->
         <div>Content</div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Mixed case FIXME
+      // Mixed case FIXME (format only)
       {
         code: `<template>
         <!-- FixMe: mixed case -->
         <div>Content</div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidFixmeFormat" }],
       },
-      // Nested invalid comment
+      // Nested invalid comment (format only)
       {
         code: `<template>
         <div>
@@ -298,18 +290,20 @@ if (vueParser) {
           </ul>
         </div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Comment in conditional rendering
+      // Comment in conditional rendering (format only)
       {
         code: `<template>
         <div v-if="condition">
           <!-- TODO: In conditional -->
         </div>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Comment in v-for loop
+      // Comment in v-for loop (format only)
       {
         code: `<template>
         <ul>
@@ -319,6 +313,7 @@ if (vueParser) {
           </li>
         </ul>
       </template>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
     ],

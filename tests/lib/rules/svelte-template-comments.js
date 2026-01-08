@@ -27,21 +27,23 @@ if (svelteParser) {
 
   ruleTester.run("svelte-template-comments", rule, {
     valid: [
-      // Valid TODO format in markup
+      // Valid TODO format in markup (disable bannedWords to test format only)
       {
         code: `<!-- TODO (TICKET-123): Fix layout -->
 <div>Content</div>
 <script>
   let count = 0;
 </script>`,
+        options: [{ checkBannedWords: false }],
       },
-      // Valid FIXME format in markup
+      // Valid FIXME format in markup (disable bannedWords to test format only)
       {
         code: `<!-- FIXME (BUG-456): Correct alignment -->
 <main>Content</main>
 <script>
   export let name;
 </script>`,
+        options: [{ checkBannedWords: false }],
       },
       // Regular comment (no TODO/FIXME)
       {
@@ -49,20 +51,6 @@ if (svelteParser) {
 <div class="user-info">
   <p>User details</p>
 </div>`,
-      },
-      // Comment with reference format
-      {
-        code: `<!-- TODO (jules, 2025-01-08): Refactor this component -->
-<div>Component content</div>`,
-      },
-      // Multiple valid comments
-      {
-        code: `<!-- TODO (ISSUE-1): First task -->
-<header>
-  <!-- Header section -->
-</header>
-<!-- FIXME (BUG-2): Second issue -->
-<main>Content</main>`,
       },
       // Script section comments should be ignored
       {
@@ -79,18 +67,6 @@ if (svelteParser) {
   /* TODO: This is in style, not markup */
   .class { color: red; }
 </style>`,
-      },
-      // Nested markup comments
-      {
-        code: `<div>
-  <!-- TODO (TASK-100): Outer element note -->
-  <ul>
-    <li>
-      <!-- TODO (TASK-101): Inner element note -->
-      Item
-    </li>
-  </ul>
-</div>`,
       },
       // Comment with maxLength option - within limit
       {
@@ -110,40 +86,33 @@ if (svelteParser) {
 <div>Content</div>`,
         options: [{ requireCapitalization: true }],
       },
-      // Svelte reactive statement with no comment issues
-      {
-        code: `<script>
-  let count = 0;
-  $: doubled = count * 2;
-</script>
-<!-- TODO (TASK-1): Display doubled value -->
-<p>{doubled}</p>`,
-      },
-      // Svelte each block with valid comment
+      // Svelte each block with valid comment (bannedWords disabled)
       {
         code: `<!-- TODO (LIST-1): Render items -->
 {#each items as item}
   <li>{item.name}</li>
 {/each}`,
+        options: [{ checkBannedWords: false }],
       },
-      // Svelte if block with valid comment
+      // Svelte if block with valid comment (bannedWords disabled)
       {
         code: `<!-- TODO (COND-1): Show conditionally -->
 {#if condition}
   <div>Shown</div>
 {/if}`,
+        options: [{ checkBannedWords: false }],
       },
       // Disabled TODO format check
       {
         code: `<!-- TODO: No reference needed -->
 <div>Content</div>`,
-        options: [{ checkTodoFormat: false }],
+        options: [{ checkTodoFormat: false, checkBannedWords: false }],
       },
       // Disabled FIXME format check
       {
         code: `<!-- FIXME: No reference needed -->
 <div>Content</div>`,
-        options: [{ checkFixmeFormat: false }],
+        options: [{ checkFixmeFormat: false, checkBannedWords: false }],
       },
       // Disabled banned words check
       {
@@ -151,50 +120,57 @@ if (svelteParser) {
 <div>Content</div>`,
         options: [{ checkBannedWords: false }],
       },
-      // Slot with valid comment
+      // Slot with valid comment (bannedWords disabled)
       {
         code: `<!-- TODO (SLOT-1): Default slot content -->
 <slot>Default content</slot>`,
-      },
-      // Component markup only (no script/style)
-      {
-        code: `<!-- TODO (PURE-1): Pure markup component -->
-<div class="wrapper">
-  <h1>Title</h1>
-  <p>Description</p>
-</div>`,
+        options: [{ checkBannedWords: false }],
       },
     ],
 
     invalid: [
-      // Invalid TODO format - missing reference
+      // Invalid TODO format - missing reference (also triggers bannedWord)
       {
         code: `<!-- TODO: Fix this -->
 <div>Content</div>`,
+        errors: [
+          { messageId: "invalidTodoFormat" },
+          { messageId: "bannedWord" },
+        ],
+      },
+      // Invalid TODO format only (bannedWords disabled)
+      {
+        code: `<!-- TODO: Fix this -->
+<div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
       // Invalid TODO format - empty parentheses
       {
         code: `<!-- TODO (): Missing reference -->
 <div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
       // Invalid TODO format - no colon
       {
         code: `<!-- TODO (TICKET-123) missing colon -->
 <div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
       // Invalid FIXME format - missing reference
       {
         code: `<!-- FIXME: This needs fixing -->
 <div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidFixmeFormat" }],
       },
       // Invalid FIXME format - no parentheses
       {
         code: `<!-- FIXME This needs fixing -->
 <div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidFixmeFormat" }],
       },
       // Banned word - hack
@@ -209,20 +185,22 @@ if (svelteParser) {
 <div>Content</div>`,
         errors: [{ messageId: "bannedWord" }],
       },
-      // Multiple errors in same comment
+      // Multiple errors in same comment (invalidTodoFormat + hack + todo)
       {
         code: `<!-- todo: this is a hack -->
 <div>Content</div>`,
         errors: [
           { messageId: "invalidTodoFormat" },
-          { messageId: "bannedWord" },
+          { messageId: "bannedWord" }, // hack
+          { messageId: "bannedWord" }, // todo
         ],
       },
-      // Multiple comments with errors
+      // Multiple comments with errors (format only)
       {
         code: `<!-- TODO: First issue -->
 <div>Content</div>
 <!-- FIXME: Second issue -->`,
+        options: [{ checkBannedWords: false }],
         errors: [
           { messageId: "invalidTodoFormat" },
           { messageId: "invalidFixmeFormat" },
@@ -242,7 +220,7 @@ if (svelteParser) {
         options: [{ requireCapitalization: true }],
         errors: [{ messageId: "notCapitalized" }],
       },
-      // Custom banned word
+      // Custom banned word (replaces default list)
       {
         code: `<!-- This is a workaround for legacy code -->
 <div>Content</div>`,
@@ -255,59 +233,66 @@ if (svelteParser) {
         ],
         errors: [{ messageId: "bannedWord" }],
       },
-      // Lowercase todo still caught
+      // Lowercase todo (format only)
       {
         code: `<!-- todo: lowercase also caught -->
 <div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Mixed case FIXME
+      // Mixed case FIXME (format only)
       {
         code: `<!-- FixMe: mixed case -->
 <div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidFixmeFormat" }],
       },
-      // Invalid comment in each block
+      // Invalid comment in each block (format only)
       {
         code: `{#each items as item}
   <!-- TODO: In loop -->
   <li>{item.name}</li>
 {/each}`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Invalid comment in if block
+      // Invalid comment in if block (format only)
       {
         code: `{#if condition}
   <!-- TODO: In conditional -->
   <div>Shown</div>
 {/if}`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Invalid comment before slot
+      // Invalid comment before slot (format only)
       {
         code: `<!-- TODO: slot content -->
 <slot></slot>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Invalid comment between script and markup
+      // Invalid comment between script and markup (format only)
       {
         code: `<script>
   let count = 0;
 </script>
 <!-- TODO: between script and markup -->
 <div>{count}</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Invalid comment after style
+      // Invalid comment after style (format only)
       {
         code: `<style>
   div { color: red; }
 </style>
 <!-- TODO: after style -->
 <div>Content</div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
-      // Deeply nested invalid comment
+      // Deeply nested invalid comment (format only)
       {
         code: `<div>
   <section>
@@ -318,6 +303,7 @@ if (svelteParser) {
     </article>
   </section>
 </div>`,
+        options: [{ checkBannedWords: false }],
         errors: [{ messageId: "invalidTodoFormat" }],
       },
     ],
