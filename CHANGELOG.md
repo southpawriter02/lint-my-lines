@@ -7,6 +7,68 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2] - 2026-01-08
+
+### Added
+
+- **Test Infrastructure Improvements**
+  - GitHub Actions CI/CD workflow (`.github/workflows/test.yml`)
+    - Node.js version matrix testing (18, 20, 22)
+    - Separate jobs for unit tests, parser-specific tests, and integration tests
+  - New test scripts in `package.json`:
+    - `test:rules` - Run only rule tests
+    - `test:utils` - Run only utility tests
+    - `test:integration` - Run integration tests
+    - `test:parsers` - Run parser-specific tests (Vue/Svelte)
+    - `test:all` - Run unit + integration tests
+    - `bench` - Run performance benchmarks
+    - `bench:check` - Check for performance regressions
+
+- **New Test Files**
+  - `tests/lib/rules/vue-template-comments.js` - 25+ test cases for Vue template HTML comments
+  - `tests/lib/rules/svelte-template-comments.js` - 20+ test cases for Svelte template HTML comments
+  - `tests/integration/eslint-integration.test.js` - ESLint API integration tests
+    - Flat config and legacy config support
+    - Autofix verification
+    - Multi-rule interaction tests
+    - Preset configuration validation
+  - `tests/integration/cli.test.js` - CLI command tests
+    - `lint-my-lines init` with various presets
+    - ESM/CJS project detection
+    - `--no-flat` flag behavior
+  - `tests/benchmarks/performance.bench.js` - Performance benchmark suite
+  - `tests/benchmarks/check-regression.js` - Regression detection script (20% threshold)
+
+- **Test Fixtures**
+  - `tests/fixtures/perf/small.js` - 50-line test fixture
+  - `tests/fixtures/perf/medium.js` - 500-line test fixture
+  - `tests/fixtures/perf/large.js` - 1000+ line test fixture
+
+- **Edge Case Tests**
+  - Unicode/emoji handling in TODO comments
+  - JSX context detection
+  - Boundary condition tests for comment length
+  - Multiple URL handling with `ignoreUrls` option
+
+### Changed
+
+- Updated `package.json` test script to include `tests/lib/**/*.js` (was only `tests/lib/rules/`)
+- Vue/Svelte template tests now gracefully skip when parsers aren't installed
+- Updated `CONTRIBUTING.md` with comprehensive test guidelines:
+  - Running different test suites
+  - Test coverage requirements
+  - Test category explanations (unit, utility, integration, performance)
+  - Example test patterns for edge cases and integration tests
+- Added `tests/fixtures/` to `.eslintrc.js` ignore patterns
+
+### Fixed
+
+- Integration tests now work with ESLint v8 API (`useEslintrc: false` instead of `overrideConfigFile: true`)
+
+### Dependencies
+
+- Added `benchmark` as dev dependency for performance testing
+
 ## [1.0.1] - 2026-01-08
 
 ### Added
@@ -333,7 +395,8 @@ All APIs are stable from v0.12.x. No configuration changes required when upgradi
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.1...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.2...HEAD
+[1.0.2]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.1...v1.0.0
 [0.12.1]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.0...v0.12.1
