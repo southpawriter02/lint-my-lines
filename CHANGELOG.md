@@ -7,6 +7,41 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.2a] - 2026-01-08
+
+### Added
+
+- **Standalone Binary Distribution**
+  - New `lint` CLI command for direct linting without ESLint configuration
+    - `lint-my-lines lint` - Lint current directory with recommended preset
+    - `lint-my-lines lint --preset strict` - Use different presets
+    - `lint-my-lines lint --fix` - Auto-fix issues
+    - `lint-my-lines lint --format json` - Output as JSON
+  - Cross-platform pre-built binaries (no Node.js required):
+    - Windows: `lint-my-lines-win-x64.exe`
+    - macOS (Intel): `lint-my-lines-macos-x64`
+    - macOS (Apple Silicon): `lint-my-lines-macos-arm64`
+    - Linux: `lint-my-lines-linux-x64`
+  - GitHub Actions release workflow (`.github/workflows/release.yml`)
+    - Automated binary builds on version tags
+    - Publishes to GitHub Releases
+
+- **New Files**
+  - `lib/cli/lint.js` - ESLint wrapper for standalone linting
+  - `tests/integration/lint-command.test.js` - Tests for lint command
+
+### Changed
+
+- Updated README.md with standalone binary usage instructions
+- Added build scripts to `package.json`:
+  - `build` - Build for current platform
+  - `build:all` - Build for all platforms
+  - `build:linux`, `build:macos`, `build:macos-arm`, `build:windows`
+
+### Dependencies
+
+- Added `pkg` as dev dependency for binary bundling
+
 ## [1.0.2] - 2026-01-08
 
 ### Added
@@ -395,7 +430,8 @@ All APIs are stable from v0.12.x. No configuration changes required when upgradi
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.2...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.2a...HEAD
+[1.0.2a]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.2...v1.0.2a
 [1.0.2]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.1...v1.0.0

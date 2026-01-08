@@ -15,7 +15,38 @@ Good comments are a crucial part of high-quality code, but they are often neglec
 
 ## Getting Started
 
-### Installation
+### Option 1: Standalone Binary (No Node.js Required)
+
+Download the pre-built binary for your platform from [GitHub Releases](https://github.com/southpawriter02/lint-my-lines/releases):
+
+| Platform | Download |
+|----------|----------|
+| Windows | `lint-my-lines-win-x64.exe` |
+| macOS (Intel) | `lint-my-lines-macos-x64` |
+| macOS (Apple Silicon) | `lint-my-lines-macos-arm64` |
+| Linux | `lint-my-lines-linux-x64` |
+
+```bash
+# Make executable (macOS/Linux)
+chmod +x lint-my-lines-macos-arm64
+
+# Lint current directory
+./lint-my-lines lint
+
+# Lint specific files
+./lint-my-lines lint src/**/*.js
+
+# Use strict preset
+./lint-my-lines lint --preset strict
+
+# Auto-fix issues
+./lint-my-lines lint --fix
+
+# Output as JSON
+./lint-my-lines lint --format json
+```
+
+### Option 2: npm Installation
 
 ```bash
 npm install eslint-plugin-lint-my-lines --save-dev

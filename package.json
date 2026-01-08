@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-lint-my-lines",
-  "version": "1.0.1",
+  "version": "1.0.2a",
   "description": "An ESLint plugin to enforce a style guide for code comments.",
   "main": "lib/index.js",
   "bin": {
@@ -14,7 +14,30 @@
     "test:parsers": "mocha 'tests/lib/rules/*-template-*.js'",
     "test:all": "npm run test && npm run test:integration",
     "bench": "node tests/benchmarks/performance.bench.js",
-    "bench:check": "node tests/benchmarks/check-regression.js"
+    "bench:check": "node tests/benchmarks/check-regression.js",
+    "build": "pkg . --out-path dist",
+    "build:linux": "pkg . --target node18-linux-x64 --output dist/lint-my-lines-linux-x64",
+    "build:macos": "pkg . --target node18-macos-x64 --output dist/lint-my-lines-macos-x64",
+    "build:macos-arm": "pkg . --target node18-macos-arm64 --output dist/lint-my-lines-macos-arm64",
+    "build:windows": "pkg . --target node18-win-x64 --output dist/lint-my-lines-win-x64.exe",
+    "build:all": "npm run build:linux && npm run build:macos && npm run build:macos-arm && npm run build:windows"
+  },
+  "pkg": {
+    "scripts": [
+      "lib/**/*.js",
+      "bin/**/*.js"
+    ],
+    "assets": [
+      "lib/**/*",
+      "package.json"
+    ],
+    "targets": [
+      "node18-linux-x64",
+      "node18-macos-x64",
+      "node18-macos-arm64",
+      "node18-win-x64"
+    ],
+    "outputPath": "dist"
   },
   "keywords": [
     "eslint",
@@ -54,11 +77,12 @@
   },
   "peerDependencies": {
     "@typescript-eslint/parser": ">=5.0.0",
-    "vue-eslint-parser": ">=9.0.0",
-    "svelte-eslint-parser": ">=0.30.0"
+    "svelte-eslint-parser": ">=0.30.0",
+    "vue-eslint-parser": ">=9.0.0"
   },
   "devDependencies": {
-    "benchmark": "^2.1.4"
+    "benchmark": "^2.1.4",
+    "pkg": "^5.8.1"
   },
   "peerDependenciesMeta": {
     "@typescript-eslint/parser": {
