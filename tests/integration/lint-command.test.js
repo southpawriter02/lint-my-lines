@@ -5,7 +5,7 @@
 "use strict";
 
 const assert = require("assert");
-const { execSync, exec } = require("child_process");
+const { execSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 
