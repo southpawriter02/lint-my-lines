@@ -26,6 +26,56 @@ This rule accepts an options object with the following properties:
 - `"recursion"` - Recursive function calls
 - `"complexity"` - Complex boolean conditions
 
+### `ternaryChainLength`
+
+Controls how many chained ternary operators trigger a comment requirement. Default: `2`
+
+```javascript
+// ternaryChainLength: 2 (default)
+// This is OK (only 1 ternary):
+const simple = condition ? "yes" : "no";
+
+// This triggers the rule (2 chained ternaries):
+const result = a ? b : c ? d : e;
+```
+
+```javascript
+// ternaryChainLength: 3
+// This is now OK (only 2 chained ternaries):
+const result = a ? b : c ? d : e;
+
+// This triggers the rule (3 chained ternaries):
+const complex = a ? b : c ? d : e ? f : g;
+```
+
+### `conditionComplexity`
+
+Controls how many logical operators (`&&`, `||`, `!`) in a single condition trigger a comment requirement. Default: `3`
+
+```javascript
+// conditionComplexity: 3 (default)
+// This is OK (only 2 operators):
+if (a && b || c) { }
+
+// This triggers the rule (3+ operators):
+if (a && b || c && d) { }
+```
+
+```javascript
+// conditionComplexity: 4
+// This is now OK (only 3 operators):
+if (a && b || c && d) { }
+
+// This triggers the rule (4+ operators):
+if (a && b && c || d && e) { }
+```
+
+The complexity score counts:
+- Each `&&` operator
+- Each `||` operator
+- Each `!` (negation) operator
+- Nested conditions in parentheses
+
 ## Examples
 
 ### Default Configuration

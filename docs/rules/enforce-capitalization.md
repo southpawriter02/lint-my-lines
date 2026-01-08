@@ -44,6 +44,50 @@ The rule automatically skips:
 - **Numbers:** `// 123 items in the list`
 - **Code references:** `// myFunction is used here`
 
+### Edge Cases
+
+**Backtick-wrapped code at start of comment:**
+
+When `ignoreInlineCode` is true (default), comments starting with backtick-wrapped code are skipped:
+
+```js
+// `functionName` is called here      <-- OK (starts with backtick)
+// The `functionName` is called here  <-- Flagged (starts with "The")
+```
+
+**JSDoc tag interaction:**
+
+Comments inside JSDoc blocks follow special handling:
+
+```js
+/**
+ * Main description here               <-- Rule applies (should be capitalized)
+ * @param name - the name parameter    <-- Skipped (JSDoc tag)
+ * @returns the result                 <-- Skipped (JSDoc tag)
+ */
+```
+
+**File path comments:**
+
+Comments that look like file paths are skipped:
+
+```js
+// ./src/utils/helper.js               <-- Skipped (file path)
+// ../config/settings.json             <-- Skipped (file path)
+// /absolute/path/to/file.ts           <-- Skipped (file path)
+// src/utils/helper.js                 <-- Flagged (no leading ./ or ../)
+```
+
+**Code identifier at start:**
+
+Single-word identifiers at the start (like variable/function names) are skipped if they look like code:
+
+```js
+// myFunction does the processing      <-- Skipped (looks like code reference)
+// getValue returns the current value  <-- Skipped (looks like code reference)
+// the function does processing        <-- Flagged ("the" is not code-like)
+```
+
 ## Autofix
 
 This rule provides automatic fixes by capitalizing the first letter:

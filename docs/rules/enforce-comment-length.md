@@ -62,6 +62,29 @@ When `ignoreUrls` is true (default), URLs don't count toward the length limit:
 // See https://example.com/very/long/documentation/path/that/would/exceed/limit
 ```
 
+**URL detection pattern:**
+
+The rule detects URLs starting with:
+- `http://`
+- `https://`
+
+**Edge cases:**
+
+```js
+// These ARE detected as URLs (excluded from length):
+// https://example.com/path
+// http://localhost:3000/api/endpoint
+
+// These are NOT detected as URLs (count toward length):
+// mailto:user@example.com     <-- Different protocol
+// ftp://files.example.com     <-- Different protocol
+// www.example.com             <-- No protocol prefix
+// //example.com               <-- Protocol-relative URL
+// See example.com/docs        <-- No protocol
+```
+
+To include all URL-like content, consider adjusting `maxLength` or using ESLint disable comments for specific lines with non-http URLs.
+
 ## When Not To Use It
 
 - When comment length doesn't matter for your project

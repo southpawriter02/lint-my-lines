@@ -7,6 +7,51 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.1] - 2026-01-08
+
+### Added
+
+- Comprehensive FAQ documentation (`docs/FAQ.md`) with 25+ questions covering:
+  - General plugin usage and preset selection
+  - Configuration patterns for test files and monorepos
+  - Rule-specific troubleshooting
+  - Integration with CI/CD pipelines
+  - Contributing guidelines
+- FAQ link added to README.md
+
+### Changed
+
+- Expanded troubleshooting section in Integration Guide with 5 new entries:
+  - Plugin conflicts with other ESLint plugins
+  - Performance issues in large codebases
+  - Vue/Svelte template comments not being linted
+  - Autofix not applying changes
+  - Rules work in IDE but not in CI
+- Fixed license reference in README.md (ISC → MIT)
+
+### Documentation (v1.0.1a)
+
+- Clarified `require-explanation-comments` options:
+  - Added examples for `ternaryChainLength` at different values
+  - Added examples for `conditionComplexity` with complexity scoring explanation
+- Clarified `valid-tsdoc` `requireRemarks` option:
+  - Defined "public API" explicitly (exported functions, classes, interfaces, types)
+  - Added examples showing when remarks are/aren't required
+- Clarified `enforce-comment-length` `ignoreUrls` behavior:
+  - Documented URL detection pattern (http://, https:// only)
+  - Added edge cases for other protocols and partial URLs
+- Clarified `comment-code-ratio` multi-line counting:
+  - Explained how block comments and JSDoc count lines
+  - Added examples showing line span counting
+- Added edge cases to `enforce-capitalization`:
+  - Backtick-wrapped code at start of comment
+  - JSDoc tag interaction
+  - File path comment detection
+- Enhanced Integration Guide:
+  - VS Code multi-language configuration (Vue/Svelte)
+  - Monorepo mixed-preset configuration example
+  - Markdown code block language support clarification
+
 ## [1.0.0] - 2026-01-03
 
 ### Summary
@@ -288,7 +333,8 @@ All APIs are stable from v0.12.x. No configuration changes required when upgradi
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.0...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.1...HEAD
+[1.0.1]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.0...v1.0.1
 [1.0.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.1...v1.0.0
 [0.12.1]: https://github.com/southpawriter02/lint-my-lines/compare/v0.12.0...v0.12.1
 [0.12.0]: https://github.com/southpawriter02/lint-my-lines/compare/v0.11.0...v0.12.0

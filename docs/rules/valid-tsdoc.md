@@ -183,7 +183,26 @@ Array of tags to disallow. Can be strings or objects with custom reasons:
 
 ### `requireRemarks`
 
-When `true`, requires `@remarks` section for public API (exported functions, classes, etc.).
+When `true`, requires `@remarks` section for public API declarations. Default: `false`
+
+**What counts as "public API":**
+
+The rule considers these as public API (requiring `@remarks` when enabled):
+
+| Declaration Type | When Required |
+|-----------------|---------------|
+| `export function` | Always |
+| `export class` | Always |
+| `export interface` | Always |
+| `export type` | Always |
+| `export const` (functions) | When value is a function |
+| `export default` | Always |
+
+**Not required for:**
+
+- Non-exported declarations (internal functions, private classes)
+- `export const` with non-function values (strings, numbers, objects)
+- Method definitions inside classes (only the class itself needs `@remarks`)
 
 ```typescript
 // Invalid with requireRemarks: true
@@ -201,6 +220,16 @@ export function processValue(value: string) {}
  * and uses memoization internally for performance.
  */
 export function processValue(value: string) {}
+```
+
+```typescript
+// These do NOT require @remarks (not public API):
+
+/** Internal helper - no @remarks needed */
+function helperFunction() {}
+
+/** Configuration constant - no @remarks needed */
+export const CONFIG_VALUE = 42;
 ```
 
 ## Autofix

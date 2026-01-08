@@ -282,6 +282,35 @@ Supported code block languages: `js`, `javascript`, `ts`, `typescript`, `jsx`, `
 
 Errors in Markdown code blocks are prefixed with the language, e.g., `[Markdown javascript block] TODO comment should use format...`
 
+**Language hint mapping:**
+
+The processor maps language hints to file types:
+
+| Hint | Processed As |
+|------|--------------|
+| `js`, `javascript`, `mjs`, `cjs` | JavaScript |
+| `ts`, `typescript` | TypeScript |
+| `jsx` | JSX |
+| `tsx` | TypeScript JSX |
+
+**Unsupported languages are skipped:**
+
+Code blocks with other language hints (like `python`, `ruby`, `bash`, `json`, etc.) are not processed and won't trigger lint errors.
+
+````markdown
+```javascript
+// TODO (TICKET-123): Fix this  <-- Will be linted
+```
+
+```python
+# TODO: Fix this  <-- NOT linted (unsupported language)
+```
+
+```
+// Plain code block  <-- NOT linted (no language hint)
+```
+````
+
 ---
 
 ## Project Configuration File
@@ -478,6 +507,27 @@ Add to `.vscode/settings.json`:
 }
 ```
 
+**Multi-language configuration (Vue/Svelte):**
+
+For projects with Vue or Svelte files, add them to the validation list:
+
+```json
+{
+  "eslint.validate": [
+    "javascript",
+    "typescript",
+    "vue",
+    "svelte"
+  ],
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "eslint.options": {
+    "extensions": [".js", ".ts", ".vue", ".svelte"]
+  }
+}
+```
+
 ### WebStorm/IntelliJ
 
 ESLint integration is built-in. Go to:
@@ -539,6 +589,51 @@ export default [
 ];
 ```
 
+### Mixed Presets in Monorepo
+
+Different packages can use different presets based on their requirements:
+
+```javascript
+// eslint.config.js (monorepo root)
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  {
+    ignores: ["**/node_modules/**", "**/dist/**"],
+  },
+
+  // Base rules for all packages
+  lintMyLines.configs["flat/minimal"],
+
+  // Stricter rules for library code (published packages)
+  {
+    files: ["packages/core/**/*.js", "packages/utils/**/*.js"],
+    ...lintMyLines.configs["flat/strict"],
+  },
+
+  // TypeScript + TSDoc for typed packages
+  {
+    files: ["packages/types/**/*.ts"],
+    ...lintMyLines.configs["flat/typescript-strict"],
+  },
+
+  // Relaxed rules for internal tools
+  {
+    files: ["tools/**/*.js", "scripts/**/*.js"],
+    rules: {
+      "lint-my-lines/require-jsdoc": "off",
+      "lint-my-lines/require-file-header": "off",
+    },
+  },
+
+  // Vue-specific for frontend package
+  {
+    files: ["packages/web/**/*.vue"],
+    ...lintMyLines.configs["flat/vue"],
+  },
+];
+```
+
 ### Nx/Turborepo
 
 Add lint task to your pipeline:
@@ -566,6 +661,8 @@ Ensure lint-my-lines is installed:
 npm install eslint-plugin-lint-my-lines --save-dev
 ```
 
+For monorepos, ensure the plugin is installed at the workspace root or in the specific package where ESLint runs.
+
 **Flat config not working**
 
 Flat config requires ESLint v9+. Check your version:
@@ -583,6 +680,105 @@ npx lint-my-lines init --no-flat
 Verify your config is loading:
 ```bash
 npx eslint --print-config yourfile.js | grep lint-my-lines
+```
+
+If rules don't appear, check:
+1. The file matches your config's `files` patterns
+2. The file isn't excluded by `.eslintignore` or `ignores`
+3. ESLint is processing the file extension (use `--ext .js,.ts,.vue`)
+
+**Plugin conflicts with other ESLint plugins**
+
+If lint-my-lines rules conflict with other plugins:
+
+1. **Check rule order**: In flat config, later configs override earlier ones
+2. **Disable conflicting rules**: If two plugins have similar rules, choose one:
+   ```javascript
+   {
+     rules: {
+       "other-plugin/capitalized-comments": "off",
+       "lint-my-lines/enforce-capitalization": "error",
+     }
+   }
+   ```
+3. **Use separate configs for different files**: Apply different plugins to different file patterns
+
+**Performance issues in large codebases**
+
+For large projects:
+
+1. **Enable ESLint caching**:
+   ```bash
+   npx eslint . --cache
+   ```
+
+2. **Exclude non-essential directories** in `.eslintignore`:
+   ```
+   node_modules/
+   dist/
+   build/
+   coverage/
+   ```
+
+3. **Consider disabling heavy rules**: `stale-comment-detection` and `issue-tracker-integration` can be slower due to AST traversal and API calls
+
+See the [Performance Guide](./PERFORMANCE_GUIDE.md) for detailed optimization tips.
+
+**Vue/Svelte template comments not being linted**
+
+Template comments require the appropriate processor. Ensure you're using the language preset:
+
+```javascript
+// Correct - includes Vue processor
+import lintMyLines from "eslint-plugin-lint-my-lines";
+export default [
+  lintMyLines.configs["flat/vue"],
+];
+
+// Incorrect - no processor, template comments won't be linted
+export default [
+  lintMyLines.configs["flat/recommended"],
+];
+```
+
+For legacy config, add the processor override:
+```json
+{
+  "overrides": [
+    {
+      "files": ["*.vue"],
+      "processor": "lint-my-lines/.vue"
+    }
+  ]
+}
+```
+
+**Autofix not applying changes**
+
+If `--fix` doesn't change anything:
+
+1. **Check if the rule is fixable**: Not all rules support autofix. See the rule documentation for "Fixable" status.
+2. **Ensure errors exist**: If a rule is `"off"` or the code is valid, there's nothing to fix
+3. **Check for conflicting fixes**: Multiple rules trying to fix the same location may cancel out
+4. **Review the fix**: Some fixes require human judgment and aren't auto-fixable
+
+```bash
+# See what would be fixed
+npx eslint . --fix-dry-run
+```
+
+**Rules work in IDE but not in CI**
+
+Common causes of IDE/CI discrepancies:
+
+1. **Different config files**: IDE may find a local config while CI uses a different path
+2. **Different ESLint versions**: Lock versions in `package-lock.json`
+3. **Environment differences**: Some rules use environment variables (e.g., `issue-tracker-integration`)
+4. **Working directory**: Ensure CI runs from the correct directory
+
+Debug by running the same command locally that CI uses:
+```bash
+npx eslint . --debug 2>&1 | head -50
 ```
 
 ---

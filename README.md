@@ -224,7 +224,7 @@ Copy the workflow from `.github/workflows/lint-comments.yml` or create your own:
 - run: npx eslint .
 ```
 
-See the full [Integration Guide](docs/INTEGRATION_GUIDE.md) for CI/CD, editor setup, and monorepo configurations.
+See the full [Integration Guide](docs/INTEGRATION_GUIDE.md) for CI/CD, editor setup, and monorepo configurations. Check the [FAQ](docs/FAQ.md) for common questions and troubleshooting tips.
 
 ## Language Support
 
@@ -256,4 +256,4 @@ See the [Integration Guide](docs/INTEGRATION_GUIDE.md#language-support) for deta
 
 ## License
 
-This project is licensed under the ISC License. See the [LICENSE](LICENSE) file for details.
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.

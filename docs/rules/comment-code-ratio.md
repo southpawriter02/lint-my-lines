@@ -13,8 +13,38 @@ ratio = commentLines / codeLines
 ```
 
 - **Code lines**: Non-blank lines that are not comments
-- **Comment lines**: Lines that are entirely comments (multi-line comments count each line)
+- **Comment lines**: Lines containing comments
 - **Blank lines**: Excluded from the calculation
+
+### How Multi-Line Comments Are Counted
+
+Multi-line comments count each line they span:
+
+```javascript
+/*
+ * This block comment
+ * spans 4 lines
+ */  // Counts as 4 comment lines
+
+/**
+ * This JSDoc comment
+ * @param name - The name
+ * @returns The greeting
+ */  // Counts as 5 comment lines
+
+// Single line comment  // Counts as 1 comment line
+```
+
+**Important:** The line count is based on the actual lines spanned in the source file, not the number of logical "statements" in the comment.
+
+```javascript
+/* Short block on one line */  // Counts as 1 comment line
+
+/*
+Same content
+but on multiple lines
+*/  // Counts as 4 comment lines
+```
 
 ### Examples
 

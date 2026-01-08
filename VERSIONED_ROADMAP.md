@@ -251,22 +251,22 @@ The following versions outline the planned evolution of `eslint-plugin-lint-my-l
 
 ## v1.0.x – Patch Releases (Maintenance)
 
-### v1.0.1 – Bug Fixes & Polish
+### v1.0.1 – Bug Fixes & Polish ✅
 
 **Theme:** Community feedback response
 
-- [ ] Fix any bugs reported after v1.0.0 release
-- [ ] Improve error messages based on user feedback
-- [ ] Update documentation for common questions
-- [ ] Add FAQ section to documentation
+- [x] Fix any bugs reported after v1.0.0 release
+- [x] Improve error messages based on user feedback
+- [x] Update documentation for common questions
+- [x] Add FAQ section to documentation
 
-### v1.0.1a – Documentation Hotfix
+### v1.0.1a – Documentation Hotfix ✅
 
 **Theme:** Quick documentation updates
 
-- [ ] Fix any broken links in documentation
-- [ ] Add examples for edge cases
-- [ ] Clarify configuration options
+- [x] Fix any broken links in documentation
+- [x] Add examples for edge cases
+- [x] Clarify configuration options
 
 ### v1.0.2 – Test Coverage Expansion
 
