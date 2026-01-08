@@ -17,5 +17,5 @@ module.exports = {
     "no-unused-vars": ["error", { argsIgnorePattern: "^_" }],
     "no-console": "off", // Allow console for CLI and warnings
   },
-  ignorePatterns: ["node_modules/", "coverage/"],
+  ignorePatterns: ["node_modules/", "coverage/", "tests/fixtures/"],
 };

@@ -12,12 +12,13 @@ describe("ESLint Integration", function() {
   // Increase timeout for ESLint operations
   this.timeout(10000);
 
-  describe("Flat Config Support", function() {
+  describe("Legacy Config Support", function() {
     it("should lint code with enforce-todo-format rule", async function() {
       const eslint = new ESLint({
-        overrideConfigFile: true,
+        useEslintrc: false,
+        plugins: { "lint-my-lines": plugin },
         overrideConfig: {
-          plugins: { "lint-my-lines": plugin },
+          plugins: ["lint-my-lines"],
           rules: {
             "lint-my-lines/enforce-todo-format": "error"
           }
@@ -31,9 +32,10 @@ describe("ESLint Integration", function() {
 
     it("should not report for valid TODO format", async function() {
       const eslint = new ESLint({
-        overrideConfigFile: true,
+        useEslintrc: false,
+        plugins: { "lint-my-lines": plugin },
         overrideConfig: {
-          plugins: { "lint-my-lines": plugin },
+          plugins: ["lint-my-lines"],
           rules: {
             "lint-my-lines/enforce-todo-format": "error"
           }
@@ -47,9 +49,10 @@ describe("ESLint Integration", function() {
     it("should apply autofix correctly", async function() {
       const eslint = new ESLint({
         fix: true,
-        overrideConfigFile: true,
+        useEslintrc: false,
+        plugins: { "lint-my-lines": plugin },
         overrideConfig: {
-          plugins: { "lint-my-lines": plugin },
+          plugins: ["lint-my-lines"],
           rules: {
             "lint-my-lines/enforce-todo-format": "error"
           }
@@ -64,9 +67,10 @@ describe("ESLint Integration", function() {
   describe("Multi-Rule Interaction", function() {
     it("should handle multiple rules on same file", async function() {
       const eslint = new ESLint({
-        overrideConfigFile: true,
+        useEslintrc: false,
+        plugins: { "lint-my-lines": plugin },
         overrideConfig: {
-          plugins: { "lint-my-lines": plugin },
+          plugins: ["lint-my-lines"],
           rules: {
             "lint-my-lines/enforce-todo-format": "error",
             "lint-my-lines/enforce-comment-length": ["error", { maxLength: 30 }]
@@ -86,9 +90,10 @@ describe("ESLint Integration", function() {
     it("should not have conflicting fixes", async function() {
       const eslint = new ESLint({
         fix: true,
-        overrideConfigFile: true,
+        useEslintrc: false,
+        plugins: { "lint-my-lines": plugin },
         overrideConfig: {
-          plugins: { "lint-my-lines": plugin },
+          plugins: ["lint-my-lines"],
           rules: {
             "lint-my-lines/enforce-capitalization": "error",
             "lint-my-lines/comment-spacing": "error"
@@ -180,9 +185,10 @@ describe("ESLint Integration", function() {
   describe("Error Messages", function() {
     it("should provide clear error messages", async function() {
       const eslint = new ESLint({
-        overrideConfigFile: true,
+        useEslintrc: false,
+        plugins: { "lint-my-lines": plugin },
         overrideConfig: {
-          plugins: { "lint-my-lines": plugin },
+          plugins: ["lint-my-lines"],
           rules: {
             "lint-my-lines/enforce-todo-format": "error"
           }

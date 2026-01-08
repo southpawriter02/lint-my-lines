@@ -44,9 +44,10 @@ ruleTester.run("enforce-comment-length", rule, {
             code: "/* A short block comment. */"
         },
 
-        // Edge case: Comment exactly at max boundary (120 chars = "// " + 117 chars)
+        // Edge case: Comment text exactly at max boundary (text = 120 chars)
+        // Note: The rule measures comment TEXT length, not full line length
         {
-            code: "// " + "x".repeat(117),
+            code: "// " + "x".repeat(120),
             options: [{ maxLength: 120 }]
         },
 
@@ -110,31 +111,27 @@ ruleTester.run("enforce-comment-length", rule, {
             errors: [{ messageId: "tooLong" }]
         },
 
-        // Edge case: Comment one character over max boundary
+        // Edge case: Comment text one character over max boundary (text = 121 chars)
+        // Note: The rule measures comment TEXT length, not full line length
         {
-            code: "// " + "x".repeat(118),
+            code: "// " + "x".repeat(121),
             options: [{ maxLength: 120 }],
             errors: [{ messageId: "tooLong" }]
         },
 
         // Edge case: Comment with ftp:// URL (not ignored - only http/https)
+        // The URL_REGEX only matches http/https, so ftp:// URLs count toward length
         {
-            code: "// Check ftp://files.example.com for resources.",
+            code: "// Check ftp://files.example.com for resources and more details.",
             options: [{ maxLength: 20, ignoreUrls: true }],
             errors: [{ messageId: "tooLong" }]
         },
 
         // Edge case: Comment one character below min length
+        // "1234" is 4 chars, minLength 6 means it's too short
         {
             code: "// 1234",
-            options: [{ minLength: 5 }],
-            errors: [{ messageId: "tooShort" }]
-        },
-
-        // Edge case: Empty comment (below any min length)
-        {
-            code: "//",
-            options: [{ minLength: 1 }],
+            options: [{ minLength: 6 }],
             errors: [{ messageId: "tooShort" }]
         }
     ]

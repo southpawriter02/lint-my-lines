@@ -95,7 +95,7 @@ ruleTester.run("enforce-todo-format", rule, {
     {
       code: "// TODO : whitespace before colon.",
       errors: [{ messageId: "invalidTodoFormat" }],
-      output: "// TODO (TICKET-XXX):  whitespace before colon."
+      output: "// TODO (TICKET-XXX): whitespace before colon."
     }
   ]
 });

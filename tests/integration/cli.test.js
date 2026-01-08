@@ -4,7 +4,7 @@
  */
 "use strict";
 
-const { execSync, spawnSync } = require("child_process");
+const { spawnSync } = require("child_process");
 const fs = require("fs");
 const path = require("path");
 const assert = require("assert");
@@ -40,7 +40,7 @@ describe("CLI: lint-my-lines", function() {
       );
 
       // Run init command
-      const result = spawnSync("node", [binPath, "init", "--preset", "recommended"], {
+      spawnSync("node", [binPath, "init", "--preset", "recommended"], {
         cwd: fixturesDir,
         encoding: "utf8"
       });
