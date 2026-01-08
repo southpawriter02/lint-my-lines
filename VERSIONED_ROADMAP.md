@@ -635,33 +635,491 @@ The following versions outline the planned evolution of `eslint-plugin-lint-my-l
 
 ---
 
-## v2.0.0 – Next Generation (Future Major)
+## v2.0.0+ – Next Generation Platform
 
-**Theme:** Breaking changes for the future
-
-- [ ] ESLint v10 exclusive support
-- [ ] Drop Node.js 18 support (Node 20+ only)
-- [ ] New rule API with enhanced capabilities
-- [ ] Plugin architecture for community extensions
-- [ ] GraphQL API for integrations
-- [ ] Real-time collaborative linting
+> **Note:** The v2.0.0+ roadmap is feature-driven rather than timeline-driven. Releases will ship when features are stable and well-tested, not on arbitrary dates.
 
 ---
 
-## Version Timeline (Projected)
+## v2.0.x – Platform Evolution
 
-| Version | Target | Focus Area |
-|---------|--------|------------|
-| v1.0.x | Q1 2026 | Maintenance & bug fixes |
-| v1.1.x | Q1 2026 | Enhanced rule options |
-| v1.2.x | Q2 2026 | New rule categories |
-| v1.3.x | Q2-Q3 2026 | External integrations |
-| v1.4.x | Q3 2026 | IDE extensions |
-| v1.5.x | Q3-Q4 2026 | Advanced analysis |
-| v1.6.x | Q4 2026 | Multi-language expansion |
-| v1.7.x | Q1 2027 | AI-powered features |
-| v1.8.x | Q2 2027 | Enterprise features |
-| v2.0.0 | Q4 2027 | Next generation |
+### v2.0.0 – Breaking Changes for the Future
+
+**Theme:** Next generation architecture
+
+- [ ] ESLint v10+ exclusive support
+- [ ] Drop Node.js 18 support (Node 20+ only)
+- [ ] Complete rewrite of rule API for enhanced capabilities
+- [ ] Plugin architecture for community extensions
+- [ ] New `@lint-my-lines/core` and `@lint-my-lines/rules` package split
+- [ ] GraphQL API for integrations
+- [ ] Modular rule loading (tree-shakeable)
+
+### v2.0.0a – Migration Tools
+
+**Theme:** Seamless upgrade path
+
+- [ ] Automated migration CLI from v1.x configs (`npx lint-my-lines migrate`)
+- [ ] Codemod for deprecated rule options
+- [ ] Compatibility layer for gradual migration
+- [ ] Migration validation and diff preview
+- [ ] Rollback support for failed migrations
+
+### v2.0.1 – Monorepo Intelligence
+
+**Theme:** Smart workspace awareness
+
+- [ ] Workspace dependency graph analysis
+- [ ] Cross-package comment consistency enforcement
+- [ ] Shared comment standards across packages
+- [ ] Turborepo native integration
+- [ ] Nx workspace support
+- [ ] Lerna/pnpm workspace detection
+- [ ] Rush monorepo compatibility
+
+### v2.0.1a – Monorepo Configuration
+
+**Theme:** Workspace customization
+
+- [ ] Per-package rule overrides
+- [ ] Workspace-level presets inheritance
+- [ ] Package boundary awareness
+- [ ] Shared vs package-specific comment standards
+- [ ] Cross-package TODO tracking
+
+### v2.0.2 – Comment Localization (i18n)
+
+**Theme:** Global development teams
+
+- [ ] Multi-language comment detection (English, Spanish, Chinese, etc.)
+- [ ] Unicode/emoji handling in comments
+- [ ] RTL language support (Arabic, Hebrew)
+- [ ] Transliteration detection for code-switching
+- [ ] Language-aware capitalization rules
+- [ ] Multi-script identifier detection
+
+### v2.0.2a – Localization Presets
+
+**Theme:** Regional configurations
+
+- [ ] Language-specific banned word lists
+- [ ] Regional date format detection in TODOs
+- [ ] Character encoding validation
+- [ ] Locale-aware comment length calculation
+- [ ] CJK character density rules
+
+---
+
+## v2.1.x – AST-Powered Intelligence
+
+### v2.1.0 – Comment Binding
+
+**Theme:** Deep code-comment relationships
+
+- [ ] Bind comments to specific AST nodes
+- [ ] Detect orphaned comments after refactoring
+- [ ] Track comment ownership across code moves
+- [ ] Comment scope detection (function, block, statement level)
+- [ ] Parent-child comment relationship mapping
+- [ ] Comment-to-symbol linking
+
+### v2.1.0a – Refactoring Support
+
+**Theme:** Safe code transformations
+
+- [ ] Comment migration during code moves
+- [ ] Intelligent comment merging strategies
+- [ ] Conflict detection for overlapping comments
+- [ ] IDE refactoring integration hooks
+- [ ] Comment preservation during AST transforms
+
+### v2.1.1 – Architectural Decision Records (ADR)
+
+**Theme:** Decision documentation
+
+- [ ] New rule: `require-adr-reference` – link complex code to ADRs
+- [ ] ADR validation against file system (`docs/adr/`)
+- [ ] ADR template enforcement
+- [ ] Architecture documentation coverage metrics
+- [ ] ADR staleness detection
+- [ ] Cross-reference validation (code ↔ ADR)
+
+### v2.1.2 – Contract/Interface Comments
+
+**Theme:** API boundaries
+
+- [ ] New rule: `require-interface-docs` – document public interfaces
+- [ ] New rule: `enforce-contract-comments` – explain invariants/preconditions
+- [ ] Design-by-contract comment patterns (`@pre`, `@post`, `@invariant`)
+- [ ] API stability markers (`@stable`, `@experimental`, `@internal`, `@deprecated`)
+- [ ] Breaking change documentation requirements
+- [ ] Semantic versioning hint detection
+
+---
+
+## v2.2.x – Domain-Specific Language Support
+
+### v2.2.0 – DSL Comment Linting
+
+**Theme:** Specialized comment formats
+
+- [ ] GraphQL schema comment linting (descriptions, deprecations)
+- [ ] OpenAPI/Swagger annotation validation
+- [ ] Prisma schema comment enforcement
+- [ ] SQL comment patterns in query files
+- [ ] Protocol Buffer documentation
+- [ ] JSON Schema description validation
+
+### v2.2.0a – DSL Configurations
+
+**Theme:** Extensible DSL support
+
+- [ ] Custom DSL parser registration API
+- [ ] Schema-aware comment validation
+- [ ] Type definition comment extraction
+- [ ] Plugin API for new DSL formats
+- [ ] AST adapter layer for non-JS languages
+
+### v2.2.1 – Regex & Pattern Documentation
+
+**Theme:** Complex pattern explanation
+
+- [ ] New rule: `require-regex-explanation` – demand comments for complex regex
+- [ ] Regex breakdown comment templates (auto-generated)
+- [ ] Pattern matching documentation standards
+- [ ] Test case documentation for patterns
+- [ ] Regex complexity scoring
+- [ ] Named capture group documentation
+
+### v2.2.2 – Environment-Aware Comments
+
+**Theme:** Config documentation
+
+- [ ] New rule: `require-env-var-docs` – document environment variables
+- [ ] Config file comment validation (`.env`, `config/*.js`)
+- [ ] Secret placeholder documentation (`$SECRET_KEY`)
+- [ ] Feature flag explanation requirements
+- [ ] Default value documentation
+- [ ] Environment-specific behavior comments
+
+---
+
+## v2.3.x – Real-Time Collaboration
+
+### v2.3.0 – Live Collaboration
+
+**Theme:** Team development
+
+- [ ] WebSocket-based live comment suggestions
+- [ ] Collaborative comment editing indicators
+- [ ] Comment ownership tracking (author attribution)
+- [ ] Real-time team standards enforcement
+- [ ] Presence awareness for comment editing
+- [ ] Conflict resolution for concurrent edits
+
+### v2.3.0a – Collaboration Backend
+
+**Theme:** Infrastructure options
+
+- [ ] Self-hosted collaboration server (Docker image)
+- [ ] Cloud-hosted option (lint-my-lines.cloud)
+- [ ] Offline mode with sync-on-reconnect
+- [ ] End-to-end encryption option
+- [ ] Team workspace management
+
+### v2.3.1 – Code Review Integration
+
+**Theme:** Review workflow
+
+- [ ] PR comment suggestions based on lint findings
+- [ ] Review checklist generation from TODOs
+- [ ] Comment coverage in changed code metrics
+- [ ] Review-time documentation prompts
+- [ ] Suggested reviewers based on comment ownership
+- [ ] Review completion tracking
+
+### v2.3.2 – Pair Programming Support
+
+**Theme:** Live collaboration
+
+- [ ] Mob/pair comment attribution (multiple authors)
+- [ ] Session-based TODO tracking
+- [ ] Live comment quality feedback
+- [ ] Shared comment snippets library
+- [ ] Ensemble programming comment patterns
+- [ ] Driver/navigator role documentation
+
+---
+
+## v2.4.x – Temporal Comments
+
+### v2.4.0 – Time-Sensitive Documentation
+
+**Theme:** Expiring comments
+
+- [ ] New rule: `enforce-expiring-comments` – sunset date enforcement
+- [ ] Version-bound comments (`// Remove after v2.0`)
+- [ ] Sprint/milestone-linked TODOs
+- [ ] Deadline-aware comment warnings
+- [ ] Calendar-based expiration checks
+- [ ] Release-triggered comment cleanup
+
+### v2.4.0a – Temporal Configuration
+
+**Theme:** Time management
+
+- [ ] Calendar integration for deadlines (Google, Outlook)
+- [ ] Sprint mapping configuration (Jira, Linear sprints)
+- [ ] Release schedule awareness
+- [ ] Holiday/freeze period exclusions
+- [ ] Timezone-aware deadline handling
+
+### v2.4.1 – Feature Flag Comments
+
+**Theme:** Toggle documentation
+
+- [ ] New rule: `feature-flag-documentation` – require flag explanations
+- [ ] Flag lifecycle tracking (created → enabled → removed)
+- [ ] Dead flag detection (flags no longer in config)
+- [ ] A/B test documentation requirements
+- [ ] Rollout percentage comments
+- [ ] Flag dependency documentation
+
+### v2.4.2 – Technical Debt Quantification
+
+**Theme:** Debt measurement
+
+- [ ] Debt scoring algorithm from comments
+- [ ] Priority classification (critical/high/medium/low)
+- [ ] Effort estimation from TODO context
+- [ ] Debt dashboard with trends over time
+- [ ] Cost-of-delay calculations
+- [ ] Debt burndown tracking
+- [ ] Team debt distribution metrics
+
+---
+
+## v2.5.x – Machine Learning Analysis
+
+### v2.5.0 – Intelligent Comment Analysis
+
+**Theme:** ML-powered insights
+
+- [ ] Comment sentiment analysis (positive/negative/neutral)
+- [ ] Frustration detection in comments ("hacky", "wtf", "I hate this")
+- [ ] Code smell prediction from comment patterns
+- [ ] Historical comment pattern learning
+- [ ] Anomaly detection for unusual commenting
+- [ ] Quality trend prediction
+
+### v2.5.0a – ML Model Configuration
+
+**Theme:** AI customization
+
+- [ ] Local model support (llama.cpp, Ollama)
+- [ ] Cloud provider integration (OpenAI, Anthropic, Google)
+- [ ] Custom model training on your codebase
+- [ ] Privacy/offline mode (local-only inference)
+- [ ] Model selection per rule type
+- [ ] Inference caching for performance
+
+### v2.5.1 – Predictive Comment Suggestions
+
+**Theme:** Proactive documentation
+
+- [ ] Suggest where comments are needed (based on code complexity)
+- [ ] Pattern-based comment templates
+- [ ] Context-aware documentation prompts
+- [ ] Learning from team's commenting style
+- [ ] Auto-complete for comment content
+- [ ] Similar code reference suggestions
+
+### v2.5.2 – Codebase Knowledge Graph
+
+**Theme:** Semantic understanding
+
+- [ ] Build knowledge graph from comments
+- [ ] Concept relationship mapping
+- [ ] Documentation gap detection
+- [ ] Cross-reference validation
+- [ ] Semantic search across comments
+- [ ] Concept drift detection over time
+
+---
+
+## v2.6.x – Specialized Framework Support
+
+### v2.6.0 – Modern Framework Rules
+
+**Theme:** Framework-native linting
+
+- [ ] Next.js App Router comment patterns (`page.tsx`, `layout.tsx`)
+- [ ] Remix loader/action documentation requirements
+- [ ] Astro island architecture comments
+- [ ] Qwik resumability documentation
+- [ ] SolidJS reactive comment patterns
+- [ ] Nuxt 3 composable documentation
+
+### v2.6.0a – React Server Components
+
+**Theme:** RSC documentation
+
+- [ ] Server/client boundary documentation (`'use client'`, `'use server'`)
+- [ ] Data fetching comment requirements
+- [ ] Suspense boundary explanations
+- [ ] Streaming SSR comments
+- [ ] Cache behavior documentation
+
+### v2.6.1 – Testing Framework Integration
+
+**Theme:** Test documentation
+
+- [ ] Jest/Vitest test description validation
+- [ ] Test case comment requirements
+- [ ] BDD scenario documentation (Given/When/Then)
+- [ ] Test coverage comment alignment
+- [ ] Mock documentation requirements
+- [ ] Snapshot rationale comments
+- [ ] E2E test step documentation (Playwright, Cypress)
+
+### v2.6.2 – State Management Documentation
+
+**Theme:** State architecture
+
+- [ ] Redux/Zustand action documentation
+- [ ] State shape explanation requirements
+- [ ] Side effect documentation (sagas, effects)
+- [ ] Selector comment validation
+- [ ] State machine documentation (XState)
+- [ ] Reactive stream comments (RxJS)
+
+---
+
+## v2.7.x – Accessibility-First Comments
+
+### v2.7.0 – Inclusive Design Documentation
+
+**Theme:** A11y awareness
+
+- [ ] ARIA attribute explanation requirements
+- [ ] Screen reader behavior documentation
+- [ ] Keyboard navigation comments
+- [ ] Color contrast decision documentation
+- [ ] Focus management explanations
+- [ ] Landmark and region documentation
+
+### v2.7.0a – WCAG Compliance Tracking
+
+**Theme:** Standards alignment
+
+- [ ] WCAG guideline linking (`// WCAG 2.1.1 Keyboard`)
+- [ ] Accessibility audit trail
+- [ ] A11y TODO categorization
+- [ ] Compliance level tracking (A, AA, AAA)
+- [ ] Remediation priority scoring
+
+### v2.7.1 – Responsive Design Comments
+
+**Theme:** Multi-device documentation
+
+- [ ] Breakpoint decision documentation
+- [ ] Mobile-first comment patterns
+- [ ] Progressive enhancement explanations
+- [ ] Device-specific behavior comments
+- [ ] Container query documentation
+- [ ] Viewport adaptation explanations
+
+### v2.7.2 – Animation & Motion Comments
+
+**Theme:** Motion documentation
+
+- [ ] Animation timing explanations
+- [ ] Reduced motion considerations (`prefers-reduced-motion`)
+- [ ] Performance impact documentation
+- [ ] Interaction state comments
+- [ ] Transition rationale documentation
+- [ ] Easing function explanations
+
+---
+
+## v2.8.x – Security & Privacy
+
+### v2.8.0 – Security-Focused Comments
+
+**Theme:** Security awareness
+
+- [ ] CVE reference validation (`// CVE-2024-xxxxx`)
+- [ ] Security boundary documentation
+- [ ] Sanitization point comments
+- [ ] Authentication flow explanations
+- [ ] Authorization decision documentation
+- [ ] Threat model references
+
+### v2.8.0a – Security Audit Support
+
+**Theme:** Audit readiness
+
+- [ ] OWASP reference linking
+- [ ] Security review markers (`// SECURITY-REVIEWED: 2024-01-15`)
+- [ ] Penetration test finding tracking
+- [ ] Vulnerability remediation documentation
+- [ ] Security exception justifications
+
+### v2.8.1 – Data Privacy Comments
+
+**Theme:** GDPR/Privacy compliance
+
+- [ ] PII handling documentation requirements
+- [ ] Data retention comment requirements
+- [ ] Consent flow explanations
+- [ ] Privacy impact documentation
+- [ ] Data minimization justifications
+- [ ] Cross-border transfer documentation
+- [ ] Right-to-deletion implementation notes
+
+### v2.8.2 – Cryptography Documentation
+
+**Theme:** Crypto explanations
+
+- [ ] Algorithm choice documentation
+- [ ] Key management comments
+- [ ] Secure random usage explanations
+- [ ] Deprecation warnings for weak crypto (MD5, SHA1)
+- [ ] Encryption mode documentation (CBC, GCM)
+- [ ] Key rotation documentation
+- [ ] Certificate handling comments
+
+---
+
+## v2.9.x – Advanced Integrations (Future)
+
+### v2.9.0 – GraphQL API
+
+**Theme:** Programmatic access
+
+- [ ] Full GraphQL API for lint results
+- [ ] Real-time subscriptions for lint events
+- [ ] Mutations for configuration management
+- [ ] Integration with GraphQL IDEs
+
+### v2.9.1 – Webhook Ecosystem
+
+**Theme:** Event-driven integrations
+
+- [ ] Configurable webhook endpoints
+- [ ] Event filtering and routing
+- [ ] Retry logic with exponential backoff
+- [ ] Signature verification for security
+
+### v2.9.2 – Custom Rule Marketplace
+
+**Theme:** Community extensions
+
+- [ ] Public rule registry
+- [ ] Rule publishing workflow
+- [ ] Versioned rule dependencies
+- [ ] Community ratings and reviews
+- [ ] Security scanning for third-party rules
 
 ---
 
