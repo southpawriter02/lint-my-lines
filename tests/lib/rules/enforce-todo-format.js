@@ -27,6 +27,27 @@ ruleTester.run("enforce-todo-format", rule, {
     {
       code: "// TODO #123: Custom format.",
       options: [{ pattern: "^TODO\\s*#\\d+:" }]
+    },
+    // Edge case: Unicode in TODO reference
+    {
+      code: "// TODO (ユーザー-123): Unicode reference test."
+    },
+    // Edge case: Emoji in description
+    {
+      code: "// TODO (TICKET-123): Fix this bug 🐛"
+    },
+    // Edge case: Multiple TODOs in multiline block comment
+    {
+      code: "/*\n * TODO (TASK-1): First task.\n * TODO (TASK-2): Second task.\n */"
+    },
+    // Edge case: TODO with very long reference
+    {
+      code: "// TODO (VERY-LONG-TICKET-REFERENCE-NUMBER-123456789): Fix this."
+    },
+    // Edge case: TODO in JSX block comment (valid format)
+    {
+      code: "{/* TODO (TICKET-123): JSX comment */}",
+      parserOptions: { ecmaVersion: 2020, ecmaFeatures: { jsx: true } }
     }
   ],
   invalid: [
@@ -50,6 +71,31 @@ ruleTester.run("enforce-todo-format", rule, {
       code: "// TODO (missing-colon) This will fail.",
       errors: [{ messageId: "invalidTodoFormat" }],
       output: "// TODO (TICKET-XXX): (missing-colon) This will fail."
+    },
+    // Edge case: Lowercase todo
+    {
+      code: "// todo: lowercase caught.",
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "// TODO (TICKET-XXX): lowercase caught."
+    },
+    // Edge case: Mixed case ToDo
+    {
+      code: "// ToDo: mixed case caught.",
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "// TODO (TICKET-XXX): mixed case caught."
+    },
+    // Edge case: TODO in JSX block comment (invalid format)
+    {
+      code: "{/* TODO: JSX comment invalid */}",
+      parserOptions: { ecmaVersion: 2020, ecmaFeatures: { jsx: true } },
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "{/* TODO (TICKET-XXX): JSX comment invalid */}"
+    },
+    // Edge case: TODO with whitespace before colon
+    {
+      code: "// TODO : whitespace before colon.",
+      errors: [{ messageId: "invalidTodoFormat" }],
+      output: "// TODO (TICKET-XXX):  whitespace before colon."
     }
   ]
 });

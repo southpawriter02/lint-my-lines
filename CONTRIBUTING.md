@@ -172,12 +172,69 @@ docs: update installation instructions for ESLint v9
 
 ## Testing Guidelines
 
+### Running Tests
+
+```bash
+# Run all tests (unit + utils)
+npm test
+
+# Run only rule tests
+npm run test:rules
+
+# Run only utility tests
+npm run test:utils
+
+# Run integration tests
+npm run test:integration
+
+# Run parser-specific tests (requires optional dependencies)
+npm install @typescript-eslint/parser vue-eslint-parser svelte-eslint-parser
+npm run test:parsers
+
+# Run all tests including integration
+npm run test:all
+
+# Run performance benchmarks
+npm run bench
+
+# Check for performance regressions
+npm run bench:check
+```
+
+### Test Coverage Requirements
+
 - **Cover all code paths** - valid and invalid cases
-- **Test edge cases** - empty comments, special characters, etc.
+- **Test edge cases** - empty comments, special characters, Unicode, emoji
 - **Test autofix output** when applicable
 - **Use descriptive test names** or comments
+- **Test with different parser options** (JSX, TypeScript, etc.)
 
-Example test structure:
+### Test Categories
+
+1. **Unit Tests** (`tests/lib/rules/*.js`)
+   - Test individual rules using ESLint's RuleTester
+   - Include valid and invalid test cases
+   - Test all rule options
+
+2. **Utility Tests** (`tests/lib/utils/*.js`)
+   - Test shared utility functions
+   - Test caching behavior
+   - Test error handling
+
+3. **Integration Tests** (`tests/integration/*.js`)
+   - Test plugin with real ESLint instances
+   - Test CLI commands
+   - Test preset configurations
+   - Test multi-rule interactions
+
+4. **Performance Tests** (`tests/benchmarks/*.js`)
+   - Benchmark linting performance
+   - Detect performance regressions
+   - Test with various file sizes
+
+### Example Test Patterns
+
+**Basic rule test:**
 ```javascript
 ruleTester.run("rule-name", rule, {
   valid: [
@@ -203,6 +260,46 @@ ruleTester.run("rule-name", rule, {
       errors: [{ messageId: "errorMessage" }],
     },
   ],
+});
+```
+
+**Edge case tests:**
+```javascript
+// Unicode/emoji handling
+{
+  code: "// TODO (ユーザー-123): Unicode reference 🐛",
+  // ...
+}
+
+// JSX context
+{
+  code: "{/* TODO (TICKET-123): JSX comment */}",
+  parserOptions: { ecmaVersion: 2020, ecmaFeatures: { jsx: true } }
+}
+
+// Boundary conditions
+{
+  code: "// " + "x".repeat(117),  // Exactly 120 chars
+  options: [{ maxLength: 120 }]
+}
+```
+
+**Integration tests:**
+```javascript
+const { ESLint } = require("eslint");
+const plugin = require("../../lib/index");
+
+it("should lint with enforce-todo-format", async function() {
+  const eslint = new ESLint({
+    overrideConfigFile: true,
+    overrideConfig: {
+      plugins: { "lint-my-lines": plugin },
+      rules: { "lint-my-lines/enforce-todo-format": "error" }
+    }
+  });
+
+  const results = await eslint.lintText("// TODO: Fix this");
+  assert.strictEqual(results[0].messages.length, 1);
 });
 ```
 

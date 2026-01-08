@@ -7,7 +7,14 @@
     "lint-my-lines": "./bin/lint-my-lines.js"
   },
   "scripts": {
-    "test": "mocha tests/lib/rules/"
+    "test": "mocha 'tests/lib/**/*.js'",
+    "test:rules": "mocha 'tests/lib/rules/*.js'",
+    "test:utils": "mocha 'tests/lib/utils/*.js'",
+    "test:integration": "mocha 'tests/integration/**/*.js'",
+    "test:parsers": "mocha 'tests/lib/rules/*-template-*.js'",
+    "test:all": "npm run test && npm run test:integration",
+    "bench": "node tests/benchmarks/performance.bench.js",
+    "bench:check": "node tests/benchmarks/check-regression.js"
   },
   "keywords": [
     "eslint",
@@ -49,6 +56,9 @@
     "@typescript-eslint/parser": ">=5.0.0",
     "vue-eslint-parser": ">=9.0.0",
     "svelte-eslint-parser": ">=0.30.0"
+  },
+  "devDependencies": {
+    "benchmark": "^2.1.4"
   },
   "peerDependenciesMeta": {
     "@typescript-eslint/parser": {
