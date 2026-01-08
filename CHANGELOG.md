@@ -7,6 +7,80 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.0.3] - 2026-01-08
+
+### Added
+
+- **ESLint v9 Full Support**
+  - Complete compatibility with ESLint v9 flat config system
+  - Version detection utilities (`lib/utils/eslint-compat.js`)
+    - `isESLintV9()`, `isESLintV8()` - Check installed ESLint version
+    - `getESLintVersion()`, `getESLintMajorVersion()` - Get version info
+    - `createESLintInstance()` - Create version-appropriate ESLint instance
+  - Optimized flat config factory (`lib/configs/flat-config-factory.js`)
+    - Singleton pattern for config caching (faster cold starts)
+    - Frozen configs to prevent accidental mutation
+    - Debug logging for troubleshooting
+  - ESLint v9 cache integration (`lib/utils/cache-integration.js`)
+    - `getCacheConfig()` - Get version-appropriate cache options
+    - `generateCacheKey()` - Generate cache keys for preset isolation
+    - `getCacheStats()` - Get cache statistics for debugging
+    - Support for ESLint v9 cache strategies (metadata/content)
+
+- **TypeScript Type Definitions**
+  - Complete type definitions in `types/index.d.ts`
+  - Full IntelliSense support for:
+    - All 21 rule options with detailed documentation
+    - Configuration presets (flat and legacy)
+    - Plugin API (`rules`, `configs`, `processors`, `meta`)
+  - Compatible with `eslint.config.ts` TypeScript config files
+
+- **Debug Logging System**
+  - Structured logging utilities (`lib/utils/debug.js`)
+  - Environment variable control: `DEBUG_LINT_MY_LINES=1`
+  - Category-based filtering: `DEBUG_LINT_MY_LINES=config,cache`
+  - Categories: config, cache, rules, cli, eslint-compat, factory
+
+- **Plugin Metadata**
+  - Added `meta` export with plugin name and version
+  - Compatible with ESLint v9 config inspector
+
+- **New Documentation**
+  - ESLint v9 Migration Guide (`docs/ESLINT_V9_MIGRATION.md`)
+    - Step-by-step migration from ESLint v8 to v9
+    - Flat config examples and patterns
+    - Troubleshooting common issues
+    - TypeScript configuration examples
+
+- **New Test Infrastructure**
+  - ESLint compatibility tests (`tests/eslint-compat/eslint-v9.test.js`)
+  - CI matrix testing with ESLint v8 and v9
+  - New test script: `npm run test:eslint-compat`
+
+### Changed
+
+- **Package Configuration**
+  - ESLint peer dependency updated: `^8.56.0 || ^9.0.0`
+  - Node.js engine requirement: `>=18.18.0` (for ESLint v9)
+  - Added TypeScript types field and exports
+  - New keywords: `eslint9`, `flat-config`
+
+- **CLI Improvements**
+  - `lib/cli/lint.js` now uses ESLint compat utilities
+  - Version-appropriate ESLint instance creation
+  - Debug logging for troubleshooting
+
+- **GitHub Actions**
+  - Test workflow now includes ESLint v8/v9 matrix
+  - Separate ESLint v9 integration test job
+  - Shows ESLint version in CI output
+
+### Performance
+
+- Flat config creation is cached (singleton pattern)
+- First import: ~5ms, subsequent imports: <0.1ms
+- Configs are frozen to prevent repeated object creation
+
 ## [1.0.2a] - 2026-01-08
 
 ### Added

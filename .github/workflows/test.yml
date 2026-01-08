@@ -8,11 +8,18 @@ on:
 
 jobs:
   test:
-    name: Run Tests (Node ${{ matrix.node-version }})
+    name: Node ${{ matrix.node-version }} / ESLint ${{ matrix.eslint-version }}
     runs-on: ubuntu-latest
     strategy:
+      fail-fast: false
       matrix:
         node-version: [18, 20, 22]
+        eslint-version: [8, 9]
+        exclude:
+          # ESLint 9 requires Node 18.18+, exclude Node 18.x to be safe
+          # Node 18.18+ works, but to simplify we test ESLint 9 on Node 20+
+          - node-version: 18
+            eslint-version: 9
 
     steps:
       - name: Checkout code
@@ -27,8 +34,19 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Install ESLint ${{ matrix.eslint-version }}
+        run: npm install eslint@${{ matrix.eslint-version }} --save-dev
+
+      - name: Show ESLint version
+        run: npx eslint --version
+
       - name: Run unit tests
         run: npm test
+
+      - name: Run ESLint compatibility tests
+        run: npm run test:eslint-compat
+        env:
+          ESLINT_VERSION: ${{ matrix.eslint-version }}
 
       - name: Run ESLint on codebase
         run: npx eslint . --format stylish
@@ -73,6 +91,36 @@ jobs:
 
       - name: Install dependencies
         run: npm ci
+
+      - name: Run integration tests
+        run: npm run test:integration
+
+  eslint-v9-integration:
+    name: ESLint v9 Integration Tests
+    runs-on: ubuntu-latest
+    needs: test
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Install ESLint v9
+        run: npm install eslint@9 --save-dev
+
+      - name: Show ESLint version
+        run: npx eslint --version
+
+      - name: Run ESLint compatibility tests
+        run: npm run test:eslint-compat
 
       - name: Run integration tests
         run: npm run test:integration
