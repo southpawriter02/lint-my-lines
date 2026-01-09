@@ -1001,3 +1001,140 @@ export const processors: Plugin["processors"];
  * Named export for the cache clearing function.
  */
 export const clearCaches: Plugin["clearCaches"];
+
+// =============================================================================
+// Config Helper Types (re-exported from helpers.d.ts)
+// =============================================================================
+
+/**
+ * Options for extending a preset with custom overrides.
+ */
+export interface ExtendPresetOptions {
+  /** Rule settings to override */
+  rules?: Partial<RulesConfig>;
+  /** Custom config name */
+  name?: string;
+  /** File patterns to apply this config to */
+  files?: string[];
+  /** File patterns to exclude */
+  ignores?: string[];
+}
+
+/**
+ * Severity variants returned by createSeverityVariants.
+ */
+export interface SeverityVariants {
+  /** Preset with all rules set to "warn" severity */
+  warn: FlatConfig;
+  /** Preset with all rules set to "error" severity */
+  error: FlatConfig;
+}
+
+/**
+ * Options for createFileTypePreset.
+ */
+export interface FileTypePresetOptions {
+  /** Base preset to extend */
+  basePreset: FlatConfig;
+  /** File patterns this preset applies to */
+  files: string[];
+  /** Rule overrides (optional) */
+  rules?: Partial<RulesConfig>;
+  /** Custom config name (optional) */
+  name?: string;
+}
+
+// =============================================================================
+// Config Helper Functions
+// =============================================================================
+
+/**
+ * Create a config that only applies to specific file patterns.
+ *
+ * This is the "include" pattern - the config will only be applied to files
+ * matching the specified glob patterns.
+ *
+ * @param preset - Base preset config from plugin.configs
+ * @param patterns - Glob pattern(s) for files to include
+ * @returns New config object with files property
+ *
+ * @example
+ * ```typescript
+ * import lintMyLines from "eslint-plugin-lint-my-lines";
+ *
+ * export default [
+ *   lintMyLines.createConfigForFiles(
+ *     lintMyLines.configs["flat/strict"],
+ *     "src/**\/*.js"
+ *   ),
+ * ];
+ * ```
+ */
+export function createConfigForFiles(
+  preset: FlatConfig,
+  patterns: string | string[]
+): FlatConfig;
+
+/**
+ * Create a config with specific file exclusions.
+ *
+ * This is the "exclude" pattern - the config will include the `ignores`
+ * property to exclude matching files from rule application.
+ *
+ * @param preset - Base preset config
+ * @param patterns - Glob pattern(s) for files to exclude
+ * @returns Config object with ignores property
+ */
+export function createConfigWithExclude(
+  preset: FlatConfig,
+  patterns: string | string[]
+): FlatConfig;
+
+/**
+ * Extend a preset with custom rule overrides.
+ *
+ * This enables rule inheritance by starting with a base preset and
+ * overriding specific rules.
+ *
+ * @param preset - Base preset config
+ * @param overrides - Configuration overrides
+ * @returns Extended config object
+ */
+export function extendPreset(
+  preset: FlatConfig,
+  overrides?: ExtendPresetOptions
+): FlatConfig;
+
+/**
+ * Create warn and error severity variants of a preset.
+ *
+ * This utility converts all rule severities in a preset to either
+ * "warn" or "error", useful for creating development vs production configs.
+ *
+ * @param preset - Base preset config
+ * @returns Object with warn and error variants
+ */
+export function createSeverityVariants(preset: FlatConfig): SeverityVariants;
+
+/**
+ * Merge multiple configs with proper precedence.
+ *
+ * Later configs override earlier ones. This is useful for creating
+ * custom presets from multiple sources.
+ *
+ * @param configs - Config objects to merge
+ * @returns Merged config object
+ */
+export function mergeConfigs(...configs: FlatConfig[]): FlatConfig;
+
+/**
+ * Create a preset for specific file types with proper inheritance.
+ *
+ * This is a convenience function that combines file patterns
+ * with rule overrides for the common use case of creating
+ * language-specific or directory-specific configurations.
+ *
+ * @param options - Configuration options
+ * @returns Configured preset
+ */
+export function createFileTypePreset(options: FileTypePresetOptions): FlatConfig;

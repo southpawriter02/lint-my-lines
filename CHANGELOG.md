@@ -7,6 +7,56 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.0] - 2026-01-08
+
+### Added
+
+- **Configuration Helper Utilities** (`lib/utils/config-helpers.js`)
+  - New utility functions for flexible ESLint flat config configuration:
+    - `createConfigForFiles(preset, patterns)` - Apply a preset only to specific files (include pattern)
+    - `createConfigWithExclude(preset, patterns)` - Exclude specific files from a preset
+    - `extendPreset(preset, overrides)` - Extend a preset with custom rule overrides (inheritance)
+    - `createSeverityVariants(preset)` - Generate warn/error variants for dev vs production
+    - `mergeConfigs(...configs)` - Merge multiple configs with proper precedence
+    - `createFileTypePreset(options)` - Create file-type-specific presets
+  - Available via subpath import: `eslint-plugin-lint-my-lines/helpers`
+  - Also re-exported from main package for convenience
+
+- **Preset Inheritance Chain** (`lib/configs/flat-config-factory.js`)
+  - `PRESET_INHERITANCE` constant documenting preset relationships
+  - `getPresetInheritanceChain(presetName)` function to get full inheritance path
+  - Clear hierarchy: minimal -> recommended -> strict, with language-specific extensions
+
+- **TypeScript Types for Helpers** (`types/helpers.d.ts`)
+  - Full type definitions for all helper functions
+  - Interfaces: `ExtendPresetOptions`, `SeverityVariants`, `FileTypePresetOptions`
+  - Added to main types (`types/index.d.ts`) as well
+
+- **New Documentation**
+  - Configuration Helpers Guide (`docs/CONFIG_HELPERS.md`)
+    - Complete reference for all helper functions
+    - Common usage patterns (monorepo, environment-specific, team presets)
+    - TypeScript examples
+    - Preset inheritance diagram
+
+- **New Test Suite**
+  - Comprehensive tests for config helpers (`tests/lib/utils/config-helpers.test.js`)
+  - New test script: `npm run test:config-helpers`
+
+### Changed
+
+- **Package Configuration**
+  - Version bumped to 1.1.0
+  - Added subpath export: `./helpers` for config helper utilities
+  - New keyword: `config-helpers`
+
+### Developer Experience
+
+- Easier customization of presets without manual object spreading
+- Environment-aware configurations (dev vs CI) with single function call
+- Clear patterns for monorepo and multi-language projects
+- Type-safe configuration with full IntelliSense support
+
 ## [1.0.3] - 2026-01-08
 
 ### Added

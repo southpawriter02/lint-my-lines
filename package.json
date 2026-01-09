@@ -1,6 +1,6 @@
 {
   "name": "eslint-plugin-lint-my-lines",
-  "version": "1.0.3",
+  "version": "1.1.0",
   "description": "An ESLint plugin to enforce a style guide for code comments.",
   "main": "lib/index.js",
   "types": "types/index.d.ts",
@@ -9,6 +9,11 @@
       "types": "./types/index.d.ts",
       "require": "./lib/index.js",
       "import": "./lib/index.js"
+    },
+    "./helpers": {
+      "types": "./types/helpers.d.ts",
+      "require": "./lib/utils/config-helpers.js",
+      "import": "./lib/utils/config-helpers.js"
     }
   },
   "bin": {
@@ -21,6 +26,7 @@
     "test:integration": "mocha 'tests/integration/**/*.js'",
     "test:parsers": "mocha 'tests/lib/rules/*-template-*.js'",
     "test:eslint-compat": "mocha 'tests/eslint-compat/**/*.js'",
+    "test:config-helpers": "mocha 'tests/lib/utils/config-helpers.test.js'",
     "test:all": "npm run test && npm run test:integration && npm run test:eslint-compat",
     "bench": "node tests/benchmarks/performance.bench.js",
     "bench:check": "node tests/benchmarks/check-regression.js",
@@ -54,6 +60,7 @@
     "eslint-plugin",
     "eslint9",
     "flat-config",
+    "config-helpers",
     "comments",
     "style-guide",
     "jsdoc",

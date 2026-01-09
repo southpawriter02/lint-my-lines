@@ -285,34 +285,39 @@ The following versions outline the planned evolution of `eslint-plugin-lint-my-l
 - [x] Add GitLab CI templates to documentation
 - [x] Test with Bitbucket Pipelines
 
-### v1.0.3 – ESLint v9 Optimization
+### v1.0.3 – ESLint v9 Optimization ✅
 
 **Theme:** Modern ESLint support
 
-- [ ] Optimize flat config performance
-- [ ] Add type definitions for TypeScript configs
-- [ ] Improve ESLint v9 cache compatibility
+- [x] Optimize flat config performance
+- [x] Add type definitions for TypeScript configs
+- [x] Improve ESLint v9 cache compatibility
 
 ---
 
 ## v1.1.x – Enhanced Rule Options
 
-### v1.1.0 – Rule Flexibility
+### v1.1.0 – Rule Flexibility ✅
 
 **Theme:** Configurable rules
 
-- [ ] Add `severity` option to all rules (allow warnings vs errors per-rule)
-- [ ] Add `exclude` patterns for file-level rule disabling
-- [ ] Add `include` patterns for targeted rule application
-- [ ] Implement rule inheritance from parent configs
+> **Implementation Note:** These features were implemented as config helper utilities
+> following ESLint best practices. Rather than adding custom options that would conflict
+> with ESLint's native patterns, we created utility functions that enhance the flat config
+> system. See [docs/CONFIG_HELPERS.md](docs/CONFIG_HELPERS.md) for full documentation.
 
-### v1.1.0a – Preset Customization
+- [x] Add `severity` option to all rules → `createSeverityVariants()` utility
+- [x] Add `exclude` patterns for file-level rule disabling → `createConfigWithExclude()` utility
+- [x] Add `include` patterns for targeted rule application → `createConfigForFiles()` utility
+- [x] Implement rule inheritance from parent configs → `extendPreset()` and `mergeConfigs()` utilities
+
+### v1.1.0a – Preset Customization ✅
 
 **Theme:** Flexible presets
 
-- [ ] Allow preset extension with overrides
-- [ ] Add `preset: "recommended+strict"` combination syntax
-- [ ] Document preset composition patterns
+- [x] Allow preset extension with overrides → `extendPreset()` utility
+- [x] Add `preset: "recommended+strict"` combination syntax → `mergeConfigs()` utility
+- [x] Document preset composition patterns → [docs/CONFIG_HELPERS.md](docs/CONFIG_HELPERS.md)
 
 ### v1.1.1 – Comment Context Rules
 
