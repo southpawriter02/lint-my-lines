@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.2] - 2026-01-08
+
+### Added
+
+- **Ignore Pattern Options** (v1.1.2)
+  - New shared utility functions in `lib/utils/comment-utils.js`:
+    - `isInsideUrl(text, position)` - Check if position is inside a URL
+    - `stripUrls(text)` - Remove URLs from text
+    - `isInsideCodeBlock(text, position)` - Check if position is inside markdown code block
+    - `isInsideInlineCode(text, position)` - Check if position is inside inline code
+    - `stripCodeBlocks(text)` - Remove markdown code blocks from text
+    - `stripInlineCode(text)` - Remove inline code from text
+    - `applyIgnoreRegex(text, pattern)` - Apply custom regex to strip content
+    - `processTextWithIgnores(text, options)` - Combined ignore processing
+
+- **New Rule Options**
+  - `enforce-comment-length`: Added `ignoreCodeBlocks`, `ignoreRegex` options
+  - `enforce-capitalization`: Added `ignoreUrls`, `ignoreCodeBlocks`, `ignoreRegex` options
+  - `ban-specific-words`: Added `ignoreUrls`, `ignoreCodeBlocks`, `ignoreInlineCode`, `ignoreRegex` options (formalized existing behavior)
+  - `no-obvious-comments`: Added `ignoreUrls`, `ignoreCodeBlocks`, `ignoreRegex` options
+  - `require-explanation-comments`: Added `ignoreRegex` option
+  - `stale-comment-detection`: Added `ignoreRegex` option
+
+- **TypeScript Types**
+  - New `IgnoreOptions` interface in `types/index.d.ts`
+  - Updated rule option interfaces with new ignore properties
+
+- **Documentation**
+  - New `docs/IGNORE_PATTERNS.md` comprehensive guide
+
+- **Tests**
+  - New `tests/lib/utils/comment-utils.test.js` with 46 tests for utility functions
+
+### Changed
+
+- Refactored `ban-specific-words` to use shared utility functions instead of inline implementations
+- All ignore options default to `true` for better out-of-box experience
+- URL and code block handling is now consistent across all applicable rules
+
+### Developer Experience
+
+- Fine-grained control over what content is analyzed
+- Reduced false positives from URLs and code examples in comments
+- Custom pattern exclusion via `ignoreRegex` option
+- Path-based exclusions documented using ESLint's native configuration
+
 ## [1.1.1] - 2026-01-08
 
 ### Added

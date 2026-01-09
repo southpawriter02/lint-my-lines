@@ -337,14 +337,27 @@ The following versions outline the planned evolution of `eslint-plugin-lint-my-l
   - `isDocumentationComment()`, `isInlineComment()`, `getCommentPurpose()` utilities
   - Enhanced comment classification with `isFileHeader`, `isCopyright`, `isBlock`, `isLine` properties
 
-### v1.1.2 – Ignore Patterns
+### v1.1.2 – Ignore Patterns ✅
 
 **Theme:** Fine-grained control
 
-- [ ] Add `ignoreUrls` option to more rules
-- [ ] Add `ignoreCodeBlocks` for markdown-in-comments
-- [ ] Add `ignoreRegex` for custom pattern exclusions
-- [ ] Add `ignorePaths` for directory-level exclusions
+> **Implementation Note:** `ignorePaths` was not implemented at the rule level as it conflicts with
+> ESLint's native configuration patterns. Instead, path-based exclusions are documented using
+> ESLint's `files` and `ignores` config options. See [docs/IGNORE_PATTERNS.md](docs/IGNORE_PATTERNS.md).
+
+- [x] Add `ignoreUrls` option to more rules
+  - Added to: `enforce-comment-length`, `enforce-capitalization`, `ban-specific-words`, `no-obvious-comments`
+  - All default to `true` for better out-of-box experience
+- [x] Add `ignoreCodeBlocks` for markdown-in-comments
+  - Triple backtick blocks (```code```) are now excluded from analysis
+  - Added to: `enforce-comment-length`, `enforce-capitalization`, `ban-specific-words`, `no-obvious-comments`
+- [x] Add `ignoreRegex` for custom pattern exclusions
+  - Added to all content-analyzing rules
+  - Allows stripping custom patterns before analysis (e.g., `@see` references)
+- [x] Add `ignorePaths` for directory-level exclusions → Documented ESLint native approach
+  - Use `ignores` in flat config for global exclusions
+  - Use `files` patterns for targeted rule application
+  - See `createConfigWithExclude()` helper from v1.1.0
 
 ---
 

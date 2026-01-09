@@ -79,6 +79,76 @@ export type RuleConfig<T = unknown> =
 // Comment Context Types (v1.1.1)
 // =============================================================================
 
+// =============================================================================
+// Ignore Options (v1.1.2)
+// =============================================================================
+
+/**
+ * Ignore pattern options for rules (v1.1.2).
+ *
+ * Controls what content is excluded from rule analysis:
+ * - URLs (http://, https://)
+ * - Markdown code blocks (```code```)
+ * - Inline code (`code`)
+ * - Custom regex patterns
+ *
+ * @example
+ * {
+ *   "lint-my-lines/enforce-comment-length": ["warn", {
+ *     ignoreUrls: true,
+ *     ignoreCodeBlocks: true,
+ *     ignoreRegex: "@see\\s+\\S+"
+ *   }]
+ * }
+ */
+export interface IgnoreOptions {
+  /**
+   * Whether to ignore URLs in comment content.
+   *
+   * When true, URLs (http:// and https://) are excluded from
+   * analysis. This is useful because URLs are often long and
+   * unavoidable.
+   *
+   * @default true
+   */
+  ignoreUrls?: boolean;
+
+  /**
+   * Whether to ignore markdown code blocks (```code```).
+   *
+   * When true, triple-backtick code blocks are excluded from
+   * analysis. Useful for documentation comments containing examples.
+   *
+   * @default true
+   */
+  ignoreCodeBlocks?: boolean;
+
+  /**
+   * Whether to ignore inline code (`code`).
+   *
+   * When true, backtick-wrapped code is excluded from analysis.
+   *
+   * @default true
+   */
+  ignoreInlineCode?: boolean;
+
+  /**
+   * Custom regex pattern to strip from comment content.
+   *
+   * Content matching this pattern is removed before analysis.
+   * Useful for ignoring custom tags or references.
+   *
+   * @example
+   * // Ignore @see references
+   * ignoreRegex: "@see\\s+\\S+"
+   *
+   * @example
+   * // Ignore @link tags
+   * ignoreRegex: "@link\\s+\\S+"
+   */
+  ignoreRegex?: string;
+}
+
 /**
  * Comment context handling options for rules.
  *
@@ -294,6 +364,21 @@ export interface EnforceCommentLengthOptions {
   ignoreInlineCode?: boolean;
 
   /**
+   * Whether to ignore markdown code blocks (```code```) in length calculation (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreCodeBlocks?: boolean;
+
+  /**
+   * Custom regex pattern to exclude from length calculation (v1.1.2).
+   *
+   * @example
+   * ignoreRegex: "@see\\s+\\S+"
+   */
+  ignoreRegex?: string;
+
+  /**
    * Comment context handling options (v1.1.1).
    *
    * Controls how this rule treats documentation vs inline comments.
@@ -373,6 +458,32 @@ export interface BanSpecificWordsOptions {
   wholeWord?: boolean;
 
   /**
+   * Ignore matches inside URLs (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreUrls?: boolean;
+
+  /**
+   * Ignore matches inside markdown code blocks (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreCodeBlocks?: boolean;
+
+  /**
+   * Ignore matches inside inline code (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreInlineCode?: boolean;
+
+  /**
+   * Custom regex pattern - matches inside are ignored (v1.1.2).
+   */
+  ignoreRegex?: string;
+
+  /**
    * Comment context handling options (v1.1.1).
    *
    * Controls how this rule treats documentation vs inline comments.
@@ -408,6 +519,25 @@ export interface EnforceCapitalizationOptions {
    * ignorePatterns: ["^e\\.g\\.", "^i\\.e\\."]
    */
   ignorePatterns?: string[];
+
+  /**
+   * Ignore comments starting with URLs (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreUrls?: boolean;
+
+  /**
+   * Ignore markdown code blocks (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreCodeBlocks?: boolean;
+
+  /**
+   * Custom regex pattern to strip before checking capitalization (v1.1.2).
+   */
+  ignoreRegex?: string;
 
   /**
    * Comment context handling options (v1.1.1).
@@ -452,6 +582,25 @@ export interface NoObviousCommentsOptions {
   sensitivity?: "low" | "medium" | "high";
 
   /**
+   * Ignore URLs when checking for obviousness (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreUrls?: boolean;
+
+  /**
+   * Ignore markdown code blocks (v1.1.2).
+   *
+   * @default true
+   */
+  ignoreCodeBlocks?: boolean;
+
+  /**
+   * Custom regex pattern to strip before checking (v1.1.2).
+   */
+  ignoreRegex?: string;
+
+  /**
    * Comment context handling options (v1.1.1).
    *
    * Controls how this rule treats documentation vs inline comments.
@@ -488,6 +637,11 @@ export interface RequireExplanationCommentsOptions {
    * @default ["regex", "bitwise"]
    */
   requireFor?: Array<"regex" | "bitwise" | "magic-numbers" | "ternary">;
+
+  /**
+   * Custom regex pattern to strip from comment before checking meaningfulness (v1.1.2).
+   */
+  ignoreRegex?: string;
 
   /**
    * Comment context handling options (v1.1.1).
@@ -789,6 +943,11 @@ export interface StaleCommentDetectionOptions {
    * @default 0.7
    */
   minConfidence?: number;
+
+  /**
+   * Custom regex pattern to strip from comment before checking references (v1.1.2).
+   */
+  ignoreRegex?: string;
 }
 
 /**
