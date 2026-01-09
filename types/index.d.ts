@@ -76,6 +76,103 @@ export type RuleConfig<T = unknown> =
   | [RuleSeverity, T];
 
 // =============================================================================
+// Comment Context Types (v1.1.1)
+// =============================================================================
+
+/**
+ * Comment context handling options for rules.
+ *
+ * Controls how rules treat different types of comments:
+ * - Documentation comments (JSDoc, file headers, license blocks)
+ * - Inline comments (single-line, trailing, explanatory)
+ *
+ * @example
+ * {
+ *   "lint-my-lines/no-obvious-comments": ["warn", {
+ *     commentContext: {
+ *       documentationComments: "skip",
+ *       inlineComments: "normal"
+ *     }
+ *   }]
+ * }
+ */
+export interface CommentContextOptions {
+  /**
+   * How to handle JSDoc and documentation comments.
+   *
+   * | Value | Behavior |
+   * |-------|----------|
+   * | strict | Apply stricter checking to documentation comments |
+   * | normal | Apply normal rule behavior (default) |
+   * | skip | Skip documentation comments entirely |
+   *
+   * @default "normal"
+   */
+  documentationComments?: "strict" | "normal" | "skip";
+
+  /**
+   * How to handle inline and trailing comments.
+   *
+   * | Value | Behavior |
+   * |-------|----------|
+   * | strict | Apply stricter checking to inline comments |
+   * | normal | Apply normal rule behavior (default) |
+   * | skip | Skip inline comments entirely |
+   *
+   * @default "normal"
+   */
+  inlineComments?: "strict" | "normal" | "skip";
+}
+
+/**
+ * File context detection result.
+ *
+ * Returned by file context detection utilities to classify files
+ * by type (test, generated, minified).
+ *
+ * @example
+ * const context = detectFileContext("dist/app.min.js");
+ * // { isTestFile: false, isGeneratedFile: true, isMinifiedFile: true }
+ */
+export interface FileContext {
+  /** Whether this is a test file (*.test.js, *.spec.ts, __tests__/*, etc.) */
+  isTestFile: boolean;
+  /** Whether this is a generated file (dist/*, build/*, *.d.ts, etc.) */
+  isGeneratedFile: boolean;
+  /** Whether this is a minified file (*.min.js, *.bundle.js, etc.) */
+  isMinifiedFile: boolean;
+}
+
+/**
+ * Comment purpose classification.
+ *
+ * Describes the semantic purpose of a comment.
+ */
+export type CommentPurpose =
+  | "documentation"  // JSDoc, file headers, API docs
+  | "explanation"    // Explains why code does something
+  | "todo"           // TODO, FIXME, NOTE markers
+  | "directive"      // ESLint directives, pragma comments
+  | "noise";         // Obvious/redundant comments
+
+/**
+ * Enhanced comment classification with context.
+ *
+ * Provides detailed classification of a comment including
+ * its purpose and whether it contains valuable information.
+ */
+export interface EnhancedCommentClassification {
+  /** Whether this is a documentation-style comment (JSDoc, file header) */
+  isDocumentationComment: boolean;
+  /** Whether this is an inline/trailing comment */
+  isInlineComment: boolean;
+  /** The semantic purpose of the comment */
+  purpose: CommentPurpose;
+  /** Whether the comment contains "why" indicators (because, workaround, etc.) */
+  hasWhyIndicator: boolean;
+}
+
+// =============================================================================
 // Rule Option Interfaces
 // =============================================================================
 
@@ -195,6 +292,13 @@ export interface EnforceCommentLengthOptions {
    * @default true
    */
   ignoreInlineCode?: boolean;
+
+  /**
+   * Comment context handling options (v1.1.1).
+   *
+   * Controls how this rule treats documentation vs inline comments.
+   */
+  commentContext?: CommentContextOptions;
 }
 
 /**
@@ -267,6 +371,50 @@ export interface BanSpecificWordsOptions {
    * @default true
    */
   wholeWord?: boolean;
+
+  /**
+   * Comment context handling options (v1.1.1).
+   *
+   * Controls how this rule treats documentation vs inline comments.
+   */
+  commentContext?: CommentContextOptions;
+}
+
+/**
+ * Options for enforce-capitalization rule.
+ *
+ * Enforces capitalization at the start of comments.
+ *
+ * @example
+ * {
+ *   "lint-my-lines/enforce-capitalization": ["warn", {
+ *     ignoreInlineCode: true,
+ *     ignorePatterns: ["^e\\.g\\.", "^i\\.e\\."]
+ *   }]
+ * }
+ */
+export interface EnforceCapitalizationOptions {
+  /**
+   * Ignore comments starting with backtick-wrapped code.
+   *
+   * @default true
+   */
+  ignoreInlineCode?: boolean;
+
+  /**
+   * Additional patterns to ignore (regex strings).
+   *
+   * @example
+   * ignorePatterns: ["^e\\.g\\.", "^i\\.e\\."]
+   */
+  ignorePatterns?: string[];
+
+  /**
+   * Comment context handling options (v1.1.1).
+   *
+   * Controls how this rule treats documentation vs inline comments.
+   */
+  commentContext?: CommentContextOptions;
 }
 
 /**
@@ -302,6 +450,16 @@ export interface NoObviousCommentsOptions {
    * @default "medium"
    */
   sensitivity?: "low" | "medium" | "high";
+
+  /**
+   * Comment context handling options (v1.1.1).
+   *
+   * Controls how this rule treats documentation vs inline comments.
+   * By default, documentation comments are skipped.
+   *
+   * @default { documentationComments: "skip", inlineComments: "normal" }
+   */
+  commentContext?: CommentContextOptions;
 }
 
 /**
@@ -330,6 +488,15 @@ export interface RequireExplanationCommentsOptions {
    * @default ["regex", "bitwise"]
    */
   requireFor?: Array<"regex" | "bitwise" | "magic-numbers" | "ternary">;
+
+  /**
+   * Comment context handling options (v1.1.1).
+   *
+   * Controls what counts as a "meaningful" explanation comment.
+   * When documentationComments is "skip", JSDoc comments won't
+   * count as sufficient explanation.
+   */
+  commentContext?: CommentContextOptions;
 }
 
 /**
@@ -709,7 +876,7 @@ export interface RulesConfig {
   "lint-my-lines/enforce-fixme-format"?: RuleConfig<EnforceTodoFormatOptions>;
   "lint-my-lines/enforce-note-format"?: RuleConfig<EnforceTodoFormatOptions>;
   "lint-my-lines/enforce-comment-length"?: RuleConfig<EnforceCommentLengthOptions>;
-  "lint-my-lines/enforce-capitalization"?: RuleConfig;
+  "lint-my-lines/enforce-capitalization"?: RuleConfig<EnforceCapitalizationOptions>;
   "lint-my-lines/comment-spacing"?: RuleConfig;
   "lint-my-lines/no-commented-code"?: RuleConfig;
   "lint-my-lines/no-obvious-comments"?: RuleConfig<NoObviousCommentsOptions>;
@@ -747,7 +914,11 @@ export type FlatConfigPreset =
   | "flat/react"
   | "flat/vue"
   | "flat/svelte"
-  | "flat/markdown";
+  | "flat/markdown"
+  // v1.1.1: File context presets
+  | "flat/test-files"
+  | "flat/generated"
+  | "flat/minified";
 
 /**
  * Legacy config preset names (ESLint v8 .eslintrc format).
@@ -849,6 +1020,10 @@ export interface Configs {
   "flat/vue": FlatConfig;
   "flat/svelte": FlatConfig;
   "flat/markdown": FlatConfig;
+  // v1.1.1: File context presets
+  "flat/test-files": FlatConfig;
+  "flat/generated": FlatConfig;
+  "flat/minified": FlatConfig;
 
   // Legacy configs (ESLint v8 .eslintrc)
   minimal: LegacyConfig;

@@ -7,6 +7,78 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.1.1] - 2026-01-08
+
+### Added
+
+- **Comment Context Detection** (`lib/utils/comment-context-utils.js`)
+  - New utility for enhanced comment classification and purpose detection
+  - Functions for detecting documentation vs inline comments
+  - `hasWhyIndicator()` - Detect explanatory comments (because, workaround, etc.)
+  - `isDocumentationComment()`, `isInlineComment()` - Comment type classification
+  - `getCommentPurpose()` - Classify as documentation, explanation, todo, directive, or noise
+  - `shouldSkipByContext()` - Context-aware comment filtering
+  - Shared `COMMENT_CONTEXT_SCHEMA` for rule option validation
+
+- **File Context Detection** (`lib/utils/file-context-utils.js`)
+  - New utility for detecting file types based on filename patterns
+  - `isTestFile()` - Detect test files (*.test.js, *.spec.ts, __tests__/*, etc.)
+  - `isGeneratedFile()` - Detect generated files (dist/*, build/*, *.d.ts, etc.)
+  - `isMinifiedFile()` - Detect minified files (*.min.js, *.bundle.js, etc.)
+  - `detectFileContext()` - Get full file context classification
+  - `hasGeneratedMarker()` - Detect generated file markers in content
+  - Glob pattern helpers for ESLint config: `getTestFileGlobs()`, `getGeneratedFileGlobs()`, `getMinifiedFileGlobs()`
+
+- **New Configuration Presets** (`lib/configs/flat-config-factory.js`)
+  - `flat/test-files` - Relaxed rules for test files (all lint-my-lines rules off)
+  - `flat/generated` - Rules disabled for generated files
+  - `flat/minified` - Rules disabled for minified files
+  - Presets automatically apply to matching file patterns
+
+- **New Rule Option: `commentContext`**
+  - Added to `no-obvious-comments`, `enforce-comment-length`, `enforce-capitalization`, `ban-specific-words`, `require-explanation-comments`
+  - Options:
+    - `documentationComments`: "strict" | "normal" | "skip" - How to handle JSDoc/doc comments
+    - `inlineComments`: "strict" | "normal" | "skip" - How to handle inline comments
+  - Allows skipping documentation comments or applying stricter rules to inline comments
+
+- **Enhanced Comment Classification** (`lib/utils/comment-utils.js`)
+  - New properties in `classifyComment()`:
+    - `isFileHeader` - Detect file header comments (@file, @fileoverview)
+    - `isCopyright` - Detect copyright/license comments
+    - `isBlock` - Whether comment is a block comment
+    - `isLine` - Whether comment is a line comment
+
+- **New Caches** (`lib/utils/performance-cache.js`)
+  - `fileContextCache` (WeakMap) - Cache file context per sourceCode object
+  - `commentContextCache` (LRU, 300 entries) - Cache enhanced comment classification
+
+- **TypeScript Types** (`types/index.d.ts`)
+  - `CommentContextOptions` interface for rule configuration
+  - `FileContext` interface for file type detection results
+  - `CommentPurpose` type for comment classification
+  - `EnhancedCommentClassification` interface
+  - `EnforceCapitalizationOptions` interface
+  - Updated rule option interfaces with `commentContext` property
+  - New preset types: `flat/test-files`, `flat/generated`, `flat/minified`
+
+- **New Tests**
+  - `tests/lib/utils/file-context-utils.test.js` - File context detection tests
+  - `tests/lib/utils/comment-context-utils.test.js` - Comment context detection tests
+
+### Changed
+
+- Rules now use `getAllCommentsCached()` consistently for better performance
+- `no-obvious-comments` defaults to skipping documentation comments
+- `require-explanation-comments` now supports context-aware meaningful comment detection
+
+### Developer Experience
+
+- Smarter rule behavior based on file and comment context
+- Reduced false positives for documentation comments
+- Easy opt-out of rules for test/generated/minified files via presets
+- Fine-grained control over how rules treat different comment types
+
 ## [1.1.0] - 2026-01-08
 
 ### Added

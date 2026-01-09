@@ -319,14 +319,23 @@ The following versions outline the planned evolution of `eslint-plugin-lint-my-l
 - [x] Add `preset: "recommended+strict"` combination syntax → `mergeConfigs()` utility
 - [x] Document preset composition patterns → [docs/CONFIG_HELPERS.md](docs/CONFIG_HELPERS.md)
 
-### v1.1.1 – Comment Context Rules
+### v1.1.1 – Comment Context Rules ✅
 
 **Theme:** Smart context detection
 
-- [ ] Add option to detect comments in test files differently
-- [ ] Add option for generated file detection
-- [ ] Add option for minified file exclusion
-- [ ] Improve detection of documentation vs inline comments
+- [x] Add option to detect comments in test files differently
+  - New `flat/test-files` preset with relaxed rules for test files
+  - File context detection via `lib/utils/file-context-utils.js`
+- [x] Add option for generated file detection
+  - New `flat/generated` preset for generated files (dist/, build/, *.d.ts, etc.)
+  - `isGeneratedFile()` and `hasGeneratedMarker()` utilities
+- [x] Add option for minified file exclusion
+  - New `flat/minified` preset for minified files (*.min.js, *.bundle.js, etc.)
+  - `isMinifiedFile()` detection utility
+- [x] Improve detection of documentation vs inline comments
+  - New `commentContext` option for 5 rules with `documentationComments` and `inlineComments` settings
+  - `isDocumentationComment()`, `isInlineComment()`, `getCommentPurpose()` utilities
+  - Enhanced comment classification with `isFileHeader`, `isCopyright`, `isBlock`, `isLine` properties
 
 ### v1.1.2 – Ignore Patterns
 
