@@ -950,6 +950,182 @@ export interface StaleCommentDetectionOptions {
   ignoreRegex?: string;
 }
 
+// =============================================================================
+// Accessibility Rule Options (v1.2.0)
+// =============================================================================
+
+/**
+ * Options for require-alt-text-comments rule.
+ *
+ * Requires comments for complex UI elements explaining their accessibility purpose.
+ *
+ * @since 1.2.0
+ *
+ * @example
+ * {
+ *   "lint-my-lines/require-alt-text-comments": ["warn", {
+ *     elements: ["img", "svg", "Icon"],
+ *     minCommentLength: 10
+ *   }]
+ * }
+ */
+export interface RequireAltTextCommentsOptions {
+  /**
+   * JSX elements to check for accessibility comments.
+   *
+   * @default ["img", "svg", "Icon", "button"]
+   */
+  elements?: string[];
+
+  /**
+   * Require comment when aria-label is present.
+   *
+   * @default true
+   */
+  requireForAriaLabels?: boolean;
+
+  /**
+   * Regex patterns to match icon component names.
+   *
+   * @default ["Icon$", "Ico$", "^Icon", "^Svg"]
+   */
+  iconComponentPatterns?: string[];
+
+  /**
+   * Minimum length for a meaningful comment.
+   *
+   * @default 10
+   */
+  minCommentLength?: number;
+
+  /**
+   * Check elements with empty alt text (decorative images).
+   *
+   * @default true
+   */
+  checkEmptyAlt?: boolean;
+
+  /**
+   * Comment context handling options.
+   */
+  commentContext?: CommentContextOptions;
+}
+
+/**
+ * Options for accessibility-todo-format rule.
+ *
+ * Enforces a standard format for accessibility TODO comments.
+ *
+ * @since 1.2.0
+ *
+ * @example
+ * {
+ *   "lint-my-lines/accessibility-todo-format": ["warn", {
+ *     requireWcagReference: true
+ *   }]
+ * }
+ */
+export interface AccessibilityTodoFormatOptions {
+  /**
+   * Custom regex pattern for A11Y-TODO format validation.
+   *
+   * @default "^A11Y-TODO\\s*\\(([^)]+)\\):"
+   */
+  pattern?: string;
+
+  /**
+   * Require WCAG guideline reference in the TODO.
+   *
+   * @default false
+   */
+  requireWcagReference?: boolean;
+
+  /**
+   * Accepted prefixes for accessibility TODOs.
+   *
+   * @default ["A11Y-TODO", "ALLY-TODO"]
+   */
+  allowedPrefixes?: string[];
+
+  /**
+   * Custom pattern for WCAG references.
+   *
+   * @default "WCAG-\\d+\\.\\d+\\.\\d+"
+   */
+  wcagPattern?: string;
+}
+
+/**
+ * Options for screen-reader-context rule.
+ *
+ * Requires explanatory comments for UI patterns that behave differently for screen readers.
+ *
+ * @since 1.2.0
+ *
+ * @example
+ * {
+ *   "lint-my-lines/screen-reader-context": ["warn", {
+ *     checkAriaHidden: true,
+ *     minExplanationLength: 20
+ *   }]
+ * }
+ */
+export interface ScreenReaderContextOptions {
+  /**
+   * Check aria-hidden elements.
+   *
+   * @default true
+   */
+  checkAriaHidden?: boolean;
+
+  /**
+   * Check role=presentation elements.
+   *
+   * @default true
+   */
+  checkRolePresentation?: boolean;
+
+  /**
+   * Check negative tabindex elements.
+   *
+   * @default true
+   */
+  checkTabindex?: boolean;
+
+  /**
+   * Check aria-live regions.
+   *
+   * @default true
+   */
+  checkAriaLive?: boolean;
+
+  /**
+   * Check aria-expanded elements.
+   *
+   * @default false
+   */
+  checkAriaExpanded?: boolean;
+
+  /**
+   * Class names for visually hidden elements.
+   *
+   * @default ["sr-only", "visually-hidden", "visuallyhidden", "screen-reader-only", "clip-hide"]
+   */
+  visuallyHiddenClasses?: string[];
+
+  /**
+   * Minimum length for meaningful explanation.
+   *
+   * @default 15
+   */
+  minExplanationLength?: number;
+
+  /**
+   * Comment context handling options.
+   */
+  commentContext?: CommentContextOptions;
+}
+
 /**
  * Options for issue-tracker-integration rule.
  *
@@ -1018,7 +1194,11 @@ export type RuleName =
   | "lint-my-lines/stale-comment-detection"
   | "lint-my-lines/todo-aging-warnings"
   | "lint-my-lines/comment-code-ratio"
-  | "lint-my-lines/issue-tracker-integration";
+  | "lint-my-lines/issue-tracker-integration"
+  // Accessibility Rules (v1.2.0)
+  | "lint-my-lines/require-alt-text-comments"
+  | "lint-my-lines/accessibility-todo-format"
+  | "lint-my-lines/screen-reader-context";
 
 /**
  * Rules configuration object with full type support.
@@ -1052,6 +1232,10 @@ export interface RulesConfig {
   "lint-my-lines/todo-aging-warnings"?: RuleConfig<TodoAgingWarningsOptions>;
   "lint-my-lines/comment-code-ratio"?: RuleConfig<CommentCodeRatioOptions>;
   "lint-my-lines/issue-tracker-integration"?: RuleConfig<IssueTrackerIntegrationOptions>;
+  // Accessibility rules (v1.2.0)
+  "lint-my-lines/require-alt-text-comments"?: RuleConfig<RequireAltTextCommentsOptions>;
+  "lint-my-lines/accessibility-todo-format"?: RuleConfig<AccessibilityTodoFormatOptions>;
+  "lint-my-lines/screen-reader-context"?: RuleConfig<ScreenReaderContextOptions>;
 }
 
 // =============================================================================
@@ -1068,6 +1252,7 @@ export type FlatConfigPreset =
   | "flat/recommended"
   | "flat/strict"
   | "flat/analysis"
+  | "flat/accessibility" // v1.2.0
   | "flat/typescript"
   | "flat/typescript-strict"
   | "flat/react"
@@ -1173,6 +1358,7 @@ export interface Configs {
   "flat/recommended": FlatConfig;
   "flat/strict": FlatConfig;
   "flat/analysis": FlatConfig;
+  "flat/accessibility": FlatConfig; // v1.2.0
   "flat/typescript": FlatConfig;
   "flat/typescript-strict": FlatConfig;
   "flat/react": FlatConfig;

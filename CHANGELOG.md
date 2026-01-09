@@ -7,6 +7,52 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0] - 2026-01-09
+
+### Added
+
+- **Accessibility Comment Rules** (v1.2.0)
+  - New `require-alt-text-comments` rule - Requires comments for complex UI elements (icons, images, buttons without visible text) explaining their accessibility purpose
+  - New `accessibility-todo-format` rule - Enforces standardized format for accessibility TODOs: `A11Y-TODO (reference): description`
+  - New `screen-reader-context` rule - Requires explanatory comments for UI patterns that behave differently for screen readers (aria-hidden, role="presentation", negative tabindex, aria-live regions, visually hidden elements)
+
+- **New Configuration Preset**
+  - `flat/accessibility` - Bundle of all accessibility-focused comment rules with sensible defaults
+
+- **TypeScript Types**
+  - New `RequireAltTextCommentsOptions` interface
+  - New `AccessibilityTodoFormatOptions` interface
+  - New `ScreenReaderContextOptions` interface
+  - Added `flat/accessibility` to `FlatConfigPreset` and `Configs` types
+
+### Rule Details
+
+#### `require-alt-text-comments`
+- Detects JSX elements: `<img>`, `<svg>`, `<Icon>`, `<button>` without visible text
+- Configurable icon component patterns (default: Icon$, Ico$, ^Icon, ^Svg)
+- Option to require comments for elements with aria-label
+- Option to require comments for decorative images (empty alt)
+- Minimum comment length validation
+
+#### `accessibility-todo-format`
+- Enforces format: `A11Y-TODO (WCAG-X.X.X): description` or `A11Y-TODO (TICKET-XXX): description`
+- Supports both A11Y-TODO and ALLY-TODO prefixes
+- Optional enforcement of WCAG guideline references
+- Auto-fix capability
+
+#### `screen-reader-context`
+- Checks for: aria-hidden="true", role="presentation/none", negative tabindex, aria-live regions
+- Detects visually hidden classes: sr-only, visually-hidden, etc.
+- Configurable checks (can disable specific detections)
+- Minimum explanation length validation
+
+### Developer Experience
+
+- Theme: Inclusive development
+- Helps teams document UI components for users with disabilities
+- Supports WCAG compliance documentation
+- Ideal for React/Vue/Svelte applications with complex UI
+
 ## [1.1.2] - 2026-01-08
 
 ### Added

@@ -363,14 +363,25 @@ The following versions outline the planned evolution of `eslint-plugin-lint-my-l
 
 ## v1.2.x – New Rule Categories
 
-### v1.2.0 – Accessibility Comments
+### v1.2.0 – Accessibility Comments ✅
 
 **Theme:** Inclusive development
 
-- [ ] New rule: `require-alt-text-comments` - suggest comments for complex UI
-- [ ] New rule: `accessibility-todo-format` - track a11y improvements
-- [ ] New rule: `screen-reader-context` - explain non-obvious UI behavior
-- [ ] Add accessibility preset
+- [x] New rule: `require-alt-text-comments` - suggest comments for complex UI
+  - Detects JSX elements needing accessibility documentation (img, svg, Icon, button)
+  - Configurable icon component patterns
+  - Option to require comments for aria-label elements
+  - Option to require comments for decorative images (empty alt)
+- [x] New rule: `accessibility-todo-format` - track a11y improvements
+  - Enforces format: `A11Y-TODO (reference): description`
+  - Supports WCAG guideline references
+  - Auto-fix capability
+- [x] New rule: `screen-reader-context` - explain non-obvious UI behavior
+  - Checks aria-hidden, role=presentation, negative tabindex, aria-live regions
+  - Detects visually hidden classes (sr-only, visually-hidden, etc.)
+  - Configurable checks for different ARIA patterns
+- [x] Add accessibility preset
+  - `flat/accessibility` preset bundles all a11y rules
 
 ### v1.2.0a – Accessibility Documentation
 
