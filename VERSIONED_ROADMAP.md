@@ -383,13 +383,20 @@ The following versions outline the planned evolution of `eslint-plugin-lint-my-l
 - [x] Add accessibility preset
   - `flat/accessibility` preset bundles all a11y rules
 
-### v1.2.0a – Accessibility Documentation
+### v1.2.0a – Accessibility Documentation ✅
 
 **Theme:** Accessibility support
 
-- [ ] Add WCAG reference links to rule docs
-- [ ] Document accessibility best practices for comments
-- [ ] Add examples from popular accessible codebases
+- [x] Add WCAG reference links to rule docs
+  - All three accessibility rule docs include WCAG reference tables with direct links
+  - References to WCAG 1.1.1, 1.3.1, 1.4.3, 1.4.5, 2.1.1, 2.4.7, 4.1.2, 4.1.3
+- [x] Document accessibility best practices for comments
+  - Created comprehensive `docs/ACCESSIBILITY_GUIDE.md`
+  - WCAG Quick Reference organized by POUR principles
+  - Comment patterns for 8+ accessibility scenarios
+- [x] Add examples from popular accessible codebases
+  - Real-world patterns from Material-UI, Chakra UI, Radix UI, React Aria, Headless UI
+  - Examples for modals, accordions, toasts, forms, navigation, and more
 
 ### v1.2.1 – Security Comments
 

@@ -14,6 +14,7 @@ This guide covers integrating lint-my-lines into your development workflow, incl
   - [Vue](#vue)
   - [Svelte](#svelte)
   - [Markdown](#markdown)
+  - [Accessibility](#accessibility)
 - [Project Configuration File](#project-configuration-file)
 - [Pre-commit Hooks](#pre-commit-hooks)
   - [Husky + lint-staged](#husky--lint-staged)
@@ -281,6 +282,81 @@ export default [
 Supported code block languages: `js`, `javascript`, `ts`, `typescript`, `jsx`, `tsx`, `mjs`, `cjs`.
 
 Errors in Markdown code blocks are prefixed with the language, e.g., `[Markdown javascript block] TODO comment should use format...`
+
+### Accessibility
+
+For projects requiring accessibility documentation, use the accessibility preset:
+
+#### Flat Config
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/accessibility"],
+];
+```
+
+#### Legacy Config
+
+```json
+{
+  "extends": ["plugin:lint-my-lines/accessibility"]
+}
+```
+
+The accessibility preset includes three rules:
+
+| Rule | Description |
+|------|-------------|
+| `accessibility-todo-format` | Enforce `A11Y-TODO (ref): description` format for accessibility work |
+| `require-alt-text-comments` | Require comments for UI elements (icons, images, buttons) |
+| `screen-reader-context` | Require comments for aria-hidden, tabindex, aria-live elements |
+
+#### Combining with Other Presets
+
+For comprehensive linting with accessibility support:
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/recommended"],
+  lintMyLines.configs["flat/accessibility"],
+];
+```
+
+#### React/JSX Accessibility
+
+For React projects with accessibility focus:
+
+```javascript
+import lintMyLines from "eslint-plugin-lint-my-lines";
+
+export default [
+  lintMyLines.configs["flat/react"],
+  lintMyLines.configs["flat/accessibility"],
+];
+```
+
+The `require-alt-text-comments` and `screen-reader-context` rules are JSX-aware and check elements like:
+
+```jsx
+// Icon button for search - aria-label describes action
+<button aria-label="Search">
+  <SearchIcon aria-hidden="true" />
+</button>
+
+{/* Decorative divider - hidden from assistive tech */}
+<hr aria-hidden="true" className="divider" />
+
+{/* Live region for form errors - announces validation messages */}
+<div aria-live="polite" className="error-messages">
+  {errors.map(e => <p key={e.id}>{e.message}</p>)}
+</div>
+```
+
+See the [Accessibility Guide](./ACCESSIBILITY_GUIDE.md) for best practices on documenting accessibility in your codebase
 
 **Language hint mapping:**
 

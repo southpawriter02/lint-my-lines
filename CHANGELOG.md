@@ -7,6 +7,49 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [1.2.0a] - 2026-01-10
+
+### Added
+
+- **Accessibility Documentation** (v1.2.0a)
+  - Comprehensive documentation for all three accessibility rules with WCAG references
+  - New `docs/ACCESSIBILITY_GUIDE.md` - Complete accessibility comment guide:
+    - WCAG Quick Reference organized by POUR principles (Perceivable, Operable, Understandable, Robust)
+    - 8+ comment patterns by accessibility scenario (decorative images, icon buttons, modals, etc.)
+    - Real-world examples from popular accessible component libraries
+  - New rule documentation files:
+    - `docs/rules/accessibility-todo-format.md` - A11Y-TODO format with WCAG references
+    - `docs/rules/require-alt-text-comments.md` - Alt text documentation patterns
+    - `docs/rules/screen-reader-context.md` - Screen reader behavior documentation
+
+- **WCAG Reference Integration**
+  - All accessibility rule docs include WCAG reference tables with direct links to w3.org
+  - References: WCAG 1.1.1, 1.3.1, 1.4.3, 1.4.5, 2.1.1, 2.4.7, 4.1.2, 4.1.3
+  - Guidelines organized by success criterion
+
+- **Real-World Pattern Examples**
+  - Patterns from Material-UI, Chakra UI, Radix UI, React Aria, Headless UI
+  - Examples for: modals/dialogs, accordions, toast notifications, form validation, navigation menus, skip links, tab panels
+
+### Changed
+
+- Updated README.md:
+  - Rule count updated from 21 to 24
+  - Added Accessibility Rules section with links to rule docs
+  - Added `accessibility` preset to presets table
+  - Added link to ACCESSIBILITY_GUIDE.md
+
+- Updated docs/INTEGRATION_GUIDE.md:
+  - Added Accessibility section under Language Support
+  - Configuration examples for `flat/accessibility` preset
+  - JSX/React accessibility comment patterns
+
+### Documentation
+
+- Theme: Accessibility support
+- Helps teams document WCAG compliance in code
+- Provides patterns for React, Vue, and Svelte accessibility comments
+
 ## [1.2.0] - 2026-01-09
 
 ### Added
@@ -718,7 +761,13 @@ All APIs are stable from v0.12.x. No configuration changes required when upgradi
 - `README.md` with installation and configuration instructions
 - `LICENSE` (ISC)
 
-[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.2a...HEAD
+[Unreleased]: https://github.com/southpawriter02/lint-my-lines/compare/v1.2.0a...HEAD
+[1.2.0a]: https://github.com/southpawriter02/lint-my-lines/compare/v1.2.0...v1.2.0a
+[1.2.0]: https://github.com/southpawriter02/lint-my-lines/compare/v1.1.2...v1.2.0
+[1.1.2]: https://github.com/southpawriter02/lint-my-lines/compare/v1.1.1...v1.1.2
+[1.1.1]: https://github.com/southpawriter02/lint-my-lines/compare/v1.1.0...v1.1.1
+[1.1.0]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.3...v1.1.0
+[1.0.3]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.2a...v1.0.3
 [1.0.2a]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.2...v1.0.2a
 [1.0.2]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.1...v1.0.2
 [1.0.1]: https://github.com/southpawriter02/lint-my-lines/compare/v1.0.0...v1.0.1

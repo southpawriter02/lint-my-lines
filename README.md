@@ -6,7 +6,7 @@ Good comments are a crucial part of high-quality code, but they are often neglec
 
 ## Features
 
-*   **21 Rules:** Comprehensive coverage for comment formatting, content quality, JSDoc/TSDoc validation, and advanced analysis.
+*   **24 Rules:** Comprehensive coverage for comment formatting, content quality, JSDoc/TSDoc validation, accessibility, and advanced analysis.
 *   **Multi-language Support:** TypeScript, JSX/TSX, Vue, Svelte, and Markdown code blocks.
 *   **3+ Configuration Presets:** Start quickly with `minimal`, `recommended`, `strict`, or language-specific presets.
 *   **Autofix Support:** Many rules automatically fix issues for you.
@@ -95,6 +95,7 @@ module.exports = {
 | `plugin:lint-my-lines/recommended` | Balanced defaults for most projects | 8 rules |
 | `plugin:lint-my-lines/strict` | Maximum enforcement for high-quality codebases | 14 rules |
 | `plugin:lint-my-lines/analysis` | Advanced analysis (stale detection, aging, ratios) | 3 rules |
+| `plugin:lint-my-lines/accessibility` | Accessibility-focused comment rules | 3 rules |
 
 ### Manual Configuration
 
@@ -175,6 +176,16 @@ module.exports = {
 | [todo-aging-warnings](docs/rules/todo-aging-warnings.md) | Warn on old TODO/FIXME comments | |
 | [comment-code-ratio](docs/rules/comment-code-ratio.md) | Report under/over-documented files | |
 | [issue-tracker-integration](docs/rules/issue-tracker-integration.md) | Validate ticket IDs in issue trackers | |
+
+### Accessibility Rules
+
+| Rule | Description | Fixable |
+|------|-------------|---------|
+| [accessibility-todo-format](docs/rules/accessibility-todo-format.md) | Enforce `A11Y-TODO (ref): desc` format | ✅ |
+| [require-alt-text-comments](docs/rules/require-alt-text-comments.md) | Require comments for UI elements | |
+| [screen-reader-context](docs/rules/screen-reader-context.md) | Require screen reader behavior docs | |
+
+See the [Accessibility Guide](docs/ACCESSIBILITY_GUIDE.md) for best practices on documenting accessibility in your codebase.
 
 ## Preset Details
 
